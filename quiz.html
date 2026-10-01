@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz - Quizora</title>
+
+    <meta name="description" content="Practice questions and test your knowledge with Quizora.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="quiz-page">
+
+    <header class="quiz-header">
+
+        <div class="container quiz-header-inner">
+
+            <a href="index.html" class="logo">
+                <span class="logo-mark">Q</span>
+                <span>Quizora</span>
+            </a>
+
+            <div class="quiz-header-info">
+
+                <div class="quiz-student">
+                    <span>Student</span>
+                    <strong data-student-name>Student</strong>
+                </div>
+
+                <button type="button" class="logout-button" data-logout>
+                    Log out
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="quiz-main">
+
+        <div class="container">
+
+            <section class="quiz-topbar">
+
+                <div class="quiz-session-info">
+
+                    <a href="courses.html" class="back-course-link">
+                        ← Back to Courses
+                    </a>
+
+                    <div class="quiz-session-heading">
+
+                        <div>
+                            <span class="quiz-mode-badge" id="quizModeBadge">
+                                Practice Mode
+                            </span>
+
+                            <h1 id="quizSubject">
+                                Mathematics
+                            </h1>
+
+                            <p id="quizDetails">
+                                BECE Preparation • JHS 3 • 2026 • Objective
+                            </p>
+                        </div>
+
+
+                        <div class="quiz-timer" id="quizTimerContainer">
+                            <span class="timer-label">
+                                Time Remaining
+                            </span>
+
+                            <strong id="quizTimer">
+                                20:00
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quiz-progress-area">
+
+                    <div class="quiz-progress-info">
+
+                        <span>
+                            Question
+                            <strong id="currentQuestionNumber">
+                                1
+                            </strong>
+                            of
+                            <strong id="totalQuestions">
+                                10
+                            </strong>
+                        </span>
+
+                        <span id="progressPercentage">
+                            10%
+                        </span>
+
+                    </div>
+
+                    <div class="quiz-progress-bar">
+                        <span id="quizProgressFill"></span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="quiz-layout">
+
+                <div class="question-area">
+
+                    <article class="question-card">
+
+                        <div class="question-card-top">
+
+                            <span class="question-label">
+                                QUESTION
+                                <span id="questionLabelNumber">
+                                    1
+                                </span>
+                            </span>
+
+                            <button type="button" class="calculator-open-button" id="calculatorButton">
+                                🧮 Calculator
+                            </button>
+
+                        </div>
+
+
+                        <h2 class="question-text" id="questionText">
+                            Loading question...
+                        </h2>
+
+
+                        <div class="answer-options" id="answerOptions"></div>
+
+
+                        <div class="answer-feedback" id="answerFeedback"></div>
+
+                    </article>
+
+
+                    <div class="quiz-controls">
+
+                        <button type="button" class="secondary-button quiz-nav-button" id="previousQuestion">
+                            ← Previous
+                        </button>
+
+
+                        <button type="button" class="primary-button quiz-nav-button" id="nextQuestion">
+                            Next →
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <aside class="quiz-sidebar">
+
+                    <div class="quiz-sidebar-card">
+
+                        <div class="sidebar-heading">
+
+                            <span class="summary-label">
+                                QUESTIONS
+                            </span>
+
+                            <h3>
+                                Question Navigator
+                            </h3>
+
+                        </div>
+
+
+                        <div class="question-navigator" id="questionNavigator"></div>
+
+
+                        <div class="navigator-legend">
+
+                            <div>
+                                <span class="legend-box current"></span>
+                                Current
+                            </div>
+
+                            <div>
+                                <span class="legend-box answered"></span>
+                                Answered
+                            </div>
+
+                            <div>
+                                <span class="legend-box unanswered"></span>
+                                Unanswered
+                            </div>
+
+                        </div>
+
+
+                        <button type="button" class="submit-quiz-button" id="submitQuizButton">
+                            Submit Quiz
+                        </button>
+
+                    </div>
+
+
+                    <div class="quiz-tip-card">
+
+                        <span>💡</span>
+
+                        <div>
+                            <strong>
+                                Quizora Tip
+                            </strong>
+
+                            <p>
+                                Read each question carefully before
+                                choosing your answer.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <div class="calculator-overlay" id="calculatorOverlay">
+
+        <div class="calculator">
+
+            <div class="calculator-header">
+
+                <div>
+                    <span class="calculator-label">
+                        QUIZORA
+                    </span>
+
+                    <h3>
+                        Calculator
+                    </h3>
+                </div>
+
+                <button type="button" class="calculator-close" id="calculatorClose" aria-label="Close calculator">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="calculator-display" id="calculatorDisplay">
+                0
+            </div>
+
+
+            <div class="calculator-buttons">
+
+                <button type="button" data-calc="clear" class="calculator-function">
+                    AC
+                </button>
+
+                <button type="button" data-calc="delete" class="calculator-function">
+                    DEL
+                </button>
+
+                <button type="button" data-calc="(" class="calculator-function">
+                    (
+                </button>
+
+                <button type="button" data-calc=")" class="calculator-function">
+                    )
+                </button>
+
+
+                <button type="button" data-calc="7">
+                    7
+                </button>
+
+                <button type="button" data-calc="8">
+                    8
+                </button>
+
+                <button type="button" data-calc="9">
+                    9
+                </button>
+
+                <button type="button" data-calc="/" class="calculator-operator">
+                    ÷
+                </button>
+
+
+                <button type="button" data-calc="4">
+                    4
+                </button>
+
+                <button type="button" data-calc="5">
+                    5
+                </button>
+
+                <button type="button" data-calc="6">
+                    6
+                </button>
+
+                <button type="button" data-calc="*" class="calculator-operator">
+                    ×
+                </button>
+
+
+                <button type="button" data-calc="1">
+                    1
+                </button>
+
+                <button type="button" data-calc="2">
+                    2
+                </button>
+
+                <button type="button" data-calc="3">
+                    3
+                </button>
+
+                <button type="button" data-calc="-" class="calculator-operator">
+                    −
+                </button>
+
+
+                <button type="button" data-calc="0">
+                    0
+                </button>
+
+                <button type="button" data-calc=".">
+                    .
+                </button>
+
+                <button type="button" data-calc="=" class="calculator-equals">
+                    =
+                </button>
+
+                <button type="button" data-calc="+" class="calculator-operator">
+                    +
+                </button>
+
+
+                <button type="button" data-calc="sqrt" class="calculator-function">
+                    √
+                </button>
+
+                <button type="button" data-calc="square" class="calculator-function">
+                    x²
+                </button>
+
+                <button type="button" data-calc="sin" class="calculator-function">
+                    sin
+                </button>
+
+                <button type="button" data-calc="cos" class="calculator-function">
+                    cos
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal-overlay" id="submitModal">
+
+        <div class="submit-modal">
+
+            <div class="modal-icon">
+                ✓
+            </div>
+
+            <h2>
+                Submit your quiz?
+            </h2>
+
+            <p id="submitModalText">
+                Make sure you are happy with your answers before
+                submitting.
+            </p>
+
+
+            <div class="modal-actions">
+
+                <button type="button" class="secondary-button" id="continueQuizButton">
+                    Continue Quiz
+                </button>
+
+                <button type="button" class="primary-button" id="confirmSubmitButton">
+                    Submit Quiz
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

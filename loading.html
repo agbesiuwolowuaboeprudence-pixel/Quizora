@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Loading - Quizora</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            background: #0f172a;
+        }
+
+        .loading-screen {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-background {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(rgba(29, 78, 216, 0.82),
+                    rgba(30, 64, 175, 0.88)),
+                radial-gradient(circle at top right,
+                    rgba(255, 255, 255, 0.18),
+                    transparent 35%);
+
+            transform: scale(1.05);
+        }
+
+        .background-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .shape-one {
+            width: 320px;
+            height: 320px;
+            top: -100px;
+            right: -80px;
+        }
+
+        .shape-two {
+            width: 220px;
+            height: 220px;
+            bottom: -70px;
+            left: -50px;
+        }
+
+        .shape-three {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 10%;
+        }
+
+        .loading-content {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            color: white;
+        }
+
+        .loading-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 36px;
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .loading-logo-mark {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: white;
+            color: #1d4ed8;
+            font-size: 28px;
+            font-weight: 900;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+        }
+
+        .loading-content h1 {
+            font-size: 30px;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .loading-content p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .loader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            margin: 30px 0 22px;
+        }
+
+        .loader span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: white;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+
+        .loader span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .loader span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .loading-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0.7);
+                opacity: 0.45;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .loading-logo {
+                font-size: 32px;
+            }
+
+            .loading-logo-mark {
+                width: 46px;
+                height: 46px;
+                font-size: 24px;
+            }
+
+            .loading-content h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="loading-screen">
+
+        <div class="loading-background"></div>
+
+        <div class="background-shape shape-one"></div>
+        <div class="background-shape shape-two"></div>
+        <div class="background-shape shape-three"></div>
+
+        <div class="loading-content">
+
+            <div class="loading-logo">
+                <span class="loading-logo-mark">Q</span>
+                <span>Quizora</span>
+            </div>
+
+            <h1>
+                Preparing your learning session
+            </h1>
+
+            <p>
+                We're getting your Quizora experience ready.
+            </p>
+
+            <div class="loader" aria-label="Loading">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="loading-status">
+                Loading your courses...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        const studentName =
+            localStorage.getItem("quizoraStudentName");
+
+        if (!studentName) {
+            window.location.replace("login.html");
+        } else {
+            setTimeout(() => {
+                window.location.replace("courses.html");
+            }, 2500);
+        }
+    </script>
+
+</body>
+
+</html>

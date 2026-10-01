@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results - Quizora</title>
+
+    <meta name="description" content="Review your Quizora quiz results and learning performance.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="results-page">
+
+    <header class="header">
+
+        <div class="container header-inner">
+
+            <a href="index.html" class="logo">
+                <span class="logo-mark">Q</span>
+                <span>Quizora</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#about">About</a>
+            </nav>
+
+            <div class="nav-actions">
+
+                <div class="student-profile">
+                    <span class="student-name" data-student-name>
+                        Student
+                    </span>
+                </div>
+
+                <button type="button" class="logout-button" data-logout>
+                    Log out
+                </button>
+
+                <button type="button" class="menu-button" id="menuButton" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#about">About</a>
+
+            <button type="button" class="mobile-logout" data-logout>
+                Log out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="results-main">
+
+        <section class="results-hero">
+
+            <div class="container">
+
+                <div class="results-heading">
+
+                    <span class="section-tag">
+                        SESSION COMPLETE
+                    </span>
+
+                    <h1>
+                        Great work,
+                        <span data-student-name>Student</span>!
+                    </h1>
+
+                    <p>
+                        You've completed your Quizora learning session.
+                        Here's how you performed.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="results-content">
+
+            <div class="container">
+
+                <div class="results-layout">
+
+                    <div class="results-primary">
+
+                        <article class="score-card">
+
+                            <div class="score-circle">
+                                <strong id="resultPercentage">
+                                    0%
+                                </strong>
+
+                                <span>
+                                    Score
+                                </span>
+                            </div>
+
+
+                            <div class="score-message">
+
+                                <span class="summary-label">
+                                    YOUR PERFORMANCE
+                                </span>
+
+                                <h2 id="resultMessage">
+                                    Session completed
+                                </h2>
+
+                                <p id="resultMessageText">
+                                    Keep practicing and building your
+                                    confidence.
+                                </p>
+
+                            </div>
+
+                        </article>
+
+
+                        <div class="result-stat-grid">
+
+                            <article class="result-stat-card">
+
+                                <span class="result-stat-icon">
+                                    ✓
+                                </span>
+
+                                <div>
+                                    <strong id="correctAnswers">
+                                        0
+                                    </strong>
+
+                                    <span>
+                                        Correct
+                                    </span>
+                                </div>
+
+                            </article>
+
+
+                            <article class="result-stat-card">
+
+                                <span class="result-stat-icon">
+                                    ×
+                                </span>
+
+                                <div>
+                                    <strong id="incorrectAnswers">
+                                        0
+                                    </strong>
+
+                                    <span>
+                                        Incorrect
+                                    </span>
+                                </div>
+
+                            </article>
+
+
+                            <article class="result-stat-card">
+
+                                <span class="result-stat-icon">
+                                    #
+                                </span>
+
+                                <div>
+                                    <strong id="resultTotalQuestions">
+                                        10
+                                    </strong>
+
+                                    <span>
+                                        Questions
+                                    </span>
+                                </div>
+
+                            </article>
+
+
+                            <article class="result-stat-card">
+
+                                <span class="result-stat-icon">
+                                    ◎
+                                </span>
+
+                                <div>
+                                    <strong id="resultAccuracy">
+                                        0%
+                                    </strong>
+
+                                    <span>
+                                        Accuracy
+                                    </span>
+                                </div>
+
+                            </article>
+
+                        </div>
+
+
+                        <article class="result-details-card">
+
+                            <div class="result-card-heading">
+
+                                <div>
+                                    <span class="summary-label">
+                                        SESSION DETAILS
+                                    </span>
+
+                                    <h3>
+                                        What you practiced
+                                    </h3>
+                                </div>
+
+                            </div>
+
+
+                            <div class="result-details-grid">
+
+                                <div class="result-detail-item">
+                                    <span>Learning Type</span>
+
+                                    <strong id="resultLearningType">
+                                        BECE Preparation
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Level</span>
+
+                                    <strong id="resultLevel">
+                                        JHS 3
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Subject</span>
+
+                                    <strong id="resultSubject">
+                                        Mathematics
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Question Source</span>
+
+                                    <strong id="resultSource">
+                                        Past Questions
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Year</span>
+
+                                    <strong id="resultYear">
+                                        2026
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Paper</span>
+
+                                    <strong id="resultPaper">
+                                        Objective
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Mode</span>
+
+                                    <strong id="resultMode">
+                                        Practice Mode
+                                    </strong>
+                                </div>
+
+
+                                <div class="result-detail-item">
+                                    <span>Final Score</span>
+
+                                    <strong id="resultScoreText">
+                                        0 / 10
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+
+                    <aside class="results-sidebar">
+
+                        <div class="results-action-card">
+
+                            <span class="summary-label">
+                                WHAT'S NEXT?
+                            </span>
+
+                            <h3>
+                                Keep learning
+                            </h3>
+
+                            <p>
+                                Continue practicing to improve your
+                                confidence and performance.
+                            </p>
+
+
+                            <button type="button" class="primary-button results-action-button" id="retryQuizButton">
+                                Try Again →
+                            </button>
+
+
+                            <a href="courses.html" class="secondary-button results-action-button">
+                                Build New Session
+                            </a>
+
+
+                            <a href="index.html" class="results-home-link">
+                                Return to Home
+                            </a>
+
+                        </div>
+
+
+                        <div class="result-tip-card">
+
+                            <span>
+                                💡
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Learning Tip
+                                </strong>
+
+                                <p>
+                                    Review topics you found difficult,
+                                    then try another practice session.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="container footer-bottom">
+            <p>
+                © 2026 Quizora. Learn smarter. Achieve more.
+            </p>
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

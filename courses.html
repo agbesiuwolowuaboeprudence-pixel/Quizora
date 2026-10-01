@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Courses - Quizora</title>
+
+    <meta name="description"
+        content="Build your Quizora learning session by choosing your learning path, level, subject and quiz mode.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="container header-inner">
+
+            <a href="index.html" class="logo">
+                <span class="logo-mark">Q</span>
+                <span>Quizora</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html">Home</a>
+                <a href="courses.html" class="active">Courses</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#about">About</a>
+            </nav>
+
+            <div class="nav-actions">
+
+                <div class="student-profile">
+                    <span class="student-name" data-student-name>
+                        Student
+                    </span>
+                </div>
+
+                <button type="button" class="logout-button" data-logout>
+                    Log out
+                </button>
+
+                <button type="button" class="menu-button" id="menuButton" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="index.html">Home</a>
+
+            <a href="courses.html">Courses</a>
+
+            <a href="index.html#features">Features</a>
+
+            <a href="index.html#about">About</a>
+
+            <button type="button" class="mobile-logout" data-logout>
+                Log out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="courses-hero">
+
+            <div class="container">
+
+                <div class="courses-hero-content">
+
+                    <span class="section-tag">
+                        YOUR LEARNING SPACE
+                    </span>
+
+                    <h1>
+                        Welcome,
+                        <span data-student-name>Student</span>
+                    </h1>
+
+                    <p>
+                        Build a learning session that matches what you
+                        want to practice today.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="course-builder-section">
+
+            <div class="container">
+
+                <div class="course-builder-layout">
+
+                    <div class="course-selection">
+
+                        <div class="builder-heading">
+
+                            <span class="section-tag">
+                                BUILD YOUR SESSION
+                            </span>
+
+                            <h2>
+                                What would you like to practice?
+                            </h2>
+
+                            <p>
+                                Choose your learning options below.
+                            </p>
+
+                        </div>
+
+
+                        <div class="selection-group">
+
+                            <div class="selection-heading">
+
+                                <span class="selection-number">
+                                    1
+                                </span>
+
+                                <div>
+                                    <h3>Learning Type</h3>
+                                    <p>
+                                        Choose your learning path.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="choice-grid two-column">
+
+                                <button type="button" class="choice-card active" data-learning-type="bece">
+
+                                    <span class="choice-icon">
+                                        🎓
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            BECE Preparation
+                                        </strong>
+
+                                        <small>
+                                            Practice towards your Basic
+                                            Education Certificate Examination.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+
+                                <button type="button" class="choice-card" data-learning-type="ccp">
+
+                                    <span class="choice-icon">
+                                        📘
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            CCP Curriculum
+                                        </strong>
+
+                                        <small>
+                                            Practice using Common Core
+                                            Programme learning content.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="selection-group">
+
+                            <div class="selection-heading">
+
+                                <span class="selection-number">
+                                    2
+                                </span>
+
+                                <div>
+                                    <h3>Level</h3>
+                                    <p>
+                                        Select your current JHS level.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="choice-grid three-column">
+
+                                <button type="button" class="choice-card compact" data-level="JHS 1">
+                                    <strong>JHS 1</strong>
+                                    <small>Foundation</small>
+                                </button>
+
+
+                                <button type="button" class="choice-card compact" data-level="JHS 2">
+                                    <strong>JHS 2</strong>
+                                    <small>Intermediate</small>
+                                </button>
+
+
+                                <button type="button" class="choice-card compact active" data-level="JHS 3">
+                                    <strong>JHS 3</strong>
+                                    <small>BECE Level</small>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="selection-group">
+
+                            <div class="selection-heading">
+
+                                <span class="selection-number">
+                                    3
+                                </span>
+
+                                <div>
+                                    <h3>Subject</h3>
+                                    <p>
+                                        Select the subject you want to practice.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="subject-grid">
+
+                                <button type="button" class="subject-card active" data-subject="Mathematics">
+                                    <span class="subject-icon">
+                                        ∑
+                                    </span>
+
+                                    <span>
+                                        <strong>Mathematics</strong>
+                                        <small>Numbers & problem solving</small>
+                                    </span>
+                                </button>
+
+
+                                <button type="button" class="subject-card" data-subject="English Language">
+                                    <span class="subject-icon">
+                                        Aa
+                                    </span>
+
+                                    <span>
+                                        <strong>English Language</strong>
+                                        <small>Grammar & comprehension</small>
+                                    </span>
+                                </button>
+
+
+                                <button type="button" class="subject-card" data-subject="Science">
+                                    <span class="subject-icon">
+                                        ⚗
+                                    </span>
+
+                                    <span>
+                                        <strong>Science</strong>
+                                        <small>Scientific understanding</small>
+                                    </span>
+                                </button>
+
+
+                                <button type="button" class="subject-card" data-subject="Social Studies">
+                                    <span class="subject-icon">
+                                        🌍
+                                    </span>
+
+                                    <span>
+                                        <strong>Social Studies</strong>
+                                        <small>Society & citizenship</small>
+                                    </span>
+                                </button>
+
+
+                                <button type="button" class="subject-card" data-subject="Computing">
+                                    <span class="subject-icon">
+                                        💻
+                                    </span>
+
+                                    <span>
+                                        <strong>Computing</strong>
+                                        <small>Digital skills & technology</small>
+                                    </span>
+                                </button>
+
+
+                                <button type="button" class="subject-card" data-subject="Religious and Moral Education">
+                                    <span class="subject-icon">
+                                        ✦
+                                    </span>
+
+                                    <span>
+                                        <strong>R.M.E.</strong>
+                                        <small>Values & moral education</small>
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="selection-group">
+
+                            <div class="selection-heading">
+
+                                <span class="selection-number">
+                                    4
+                                </span>
+
+                                <div>
+                                    <h3>Question Source</h3>
+                                    <p>
+                                        Choose the type of questions.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="choice-grid two-column">
+
+                                <button type="button" class="choice-card active" data-source="past">
+
+                                    <span class="choice-icon">
+                                        📝
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            Past Questions
+                                        </strong>
+
+                                        <small>
+                                            Practice previous exam-style
+                                            questions.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+
+                                <button type="button" class="choice-card" data-source="ccp">
+
+                                    <span class="choice-icon">
+                                        📖
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            CCP Questions
+                                        </strong>
+
+                                        <small>
+                                            Practice curriculum-based
+                                            questions.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="select-grid">
+
+                                <div class="select-field">
+
+                                    <label for="yearSelect">
+                                        Year
+                                    </label>
+
+                                    <select id="yearSelect">
+
+                                        <option value="2026">
+                                            2026
+                                        </option>
+
+                                        <option value="2025">
+                                            2025
+                                        </option>
+
+                                        <option value="2024">
+                                            2024
+                                        </option>
+
+                                        <option value="2023">
+                                            2023
+                                        </option>
+
+                                        <option value="2022">
+                                            2022
+                                        </option>
+
+                                        <option value="2021">
+                                            2021
+                                        </option>
+
+                                        <option value="2020">
+                                            2020
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="select-field">
+
+                                    <label for="paperSelect">
+                                        Paper
+                                    </label>
+
+                                    <select id="paperSelect">
+
+                                        <option value="Objective">
+                                            Objective
+                                        </option>
+
+                                        <option value="Essay">
+                                            Essay
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="selection-group">
+
+                            <div class="selection-heading">
+
+                                <span class="selection-number">
+                                    5
+                                </span>
+
+                                <div>
+                                    <h3>Mode</h3>
+                                    <p>
+                                        Choose how you want to practice.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="choice-grid two-column">
+
+                                <button type="button" class="choice-card mode-card active" data-mode="practice">
+
+                                    <span class="choice-icon">
+                                        🎯
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            Practice Mode
+                                        </strong>
+
+                                        <small>
+                                            Learn at your own pace with
+                                            immediate feedback.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+
+                                <button type="button" class="choice-card mode-card" data-mode="exam">
+
+                                    <span class="choice-icon">
+                                        ⏱
+                                    </span>
+
+                                    <span class="choice-content">
+
+                                        <strong>
+                                            Exam Mode
+                                        </strong>
+
+                                        <small>
+                                            Practice under timed exam-style
+                                            conditions.
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <aside class="session-summary">
+
+                        <div class="summary-card">
+
+                            <span class="summary-label">
+                                YOUR SESSION
+                            </span>
+
+                            <h3>
+                                Session Summary
+                            </h3>
+
+                            <p class="summary-description">
+                                Review your choices before starting.
+                            </p>
+
+
+                            <div class="summary-list">
+
+                                <div class="summary-item">
+                                    <span>Learning Type</span>
+                                    <strong id="summaryLearningType">
+                                        BECE Preparation
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Level</span>
+                                    <strong id="summaryLevel">
+                                        JHS 3
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Subject</span>
+                                    <strong id="summarySubject">
+                                        Mathematics
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Source</span>
+                                    <strong id="summarySource">
+                                        Past Questions
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Year</span>
+                                    <strong id="summaryYear">
+                                        2026
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Paper</span>
+                                    <strong id="summaryPaper">
+                                        Objective
+                                    </strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Mode</span>
+                                    <strong id="summaryMode">
+                                        Practice Mode
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            <div class="summary-note">
+
+                                <span>💡</span>
+
+                                <p>
+                                    You can change these options before
+                                    starting your quiz.
+                                </p>
+
+                            </div>
+
+
+                            <button type="button" class="primary-button start-button" id="startQuiz">
+                                Start Quiz →
+                            </button>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="container footer-bottom">
+            <p>
+                © 2026 Quizora. Learn smarter. Achieve more.
+            </p>
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
