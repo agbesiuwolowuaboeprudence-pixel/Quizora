@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quizora Backend — Technical Documentation</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5pt; line-height: 1.55; color: #1e2430; margin: 0;
+  }
+  .cover {
+    text-align: center; padding-top: 120px; page-break-after: always;
+  }
+  .cover h1 { font-size: 34pt; margin: 0; color: #1a56db; letter-spacing: -0.5px; }
+  .cover h2 { font-size: 16pt; font-weight: 400; color: #4b5563; margin-top: 8px; }
+  .cover .meta { margin-top: 60px; color: #6b7280; font-size: 10pt; }
+  .cover .badge {
+    display: inline-block; background: #e8f0fe; color: #1a56db;
+    border-radius: 999px; padding: 6px 18px; font-size: 10pt; margin-top: 24px;
+  }
+  h1.doc { font-size: 20pt; color: #1a56db; border-bottom: 3px solid #1a56db; padding-bottom: 6px; margin-top: 34px; }
+  h2.section {
+    font-size: 14pt; color: #111827; background: #f3f6fc;
+    padding: 7px 12px; border-left: 4px solid #1a56db; border-radius: 0 6px 6px 0;
+    margin-top: 26px; page-break-after: avoid;
+  }
+  h3.file { font-size: 11.5pt; color: #1a56db; margin-top: 18px; margin-bottom: 4px; page-break-after: avoid; }
+  h3.file .path { font-family: Consolas, "Courier New", monospace; font-weight: 400; color: #6b7280; font-size: 9.5pt; }
+  h4 { font-size: 10.5pt; margin: 12px 0 4px; color: #374151; page-break-after: avoid; }
+  code, .mono {
+    font-family: Consolas, "Courier New", monospace; font-size: 9.5pt;
+    background: #eef1f6; padding: 1px 5px; border-radius: 4px; color: #b91c1c;
+  }
+  pre {
+    background: #0f172a; color: #e2e8f0; padding: 12px 14px; border-radius: 8px;
+    font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.5;
+    overflow-x: hidden; white-space: pre-wrap; page-break-inside: avoid;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 9.5pt; page-break-inside: avoid; }
+  th { background: #1a56db; color: #fff; text-align: left; padding: 7px 9px; font-weight: 600; }
+  td { padding: 6px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .filebox {
+    border: 1px solid #dbe3f0; border-radius: 8px; padding: 10px 14px;
+    margin: 8px 0 14px; background: #fbfcfe; page-break-inside: avoid;
+  }
+  .filebox p { margin: 5px 0; }
+  .tag {
+    display: inline-block; font-size: 8.5pt; font-weight: 600; border-radius: 4px;
+    padding: 1px 8px; margin-left: 8px; vertical-align: middle;
+  }
+  .tag.svc { background: #dcfce7; color: #166534; }
+  .tag.ctrl { background: #fef3c7; color: #92400e; }
+  .tag.ent { background: #e0e7ff; color: #3730a3; }
+  .tag.cfg { background: #fce7f3; color: #9d174d; }
+  .tag.repo { background: #cffafe; color: #155e75; }
+  .tag.dto { background: #f3e8ff; color: #6b21a8; }
+  .tag.sec { background: #fee2e2; color: #991b1b; }
+  .tag.test { background: #e5e7eb; color: #374151; }
+  ul { margin: 6px 0 10px; padding-left: 22px; }
+  li { margin-bottom: 3px; }
+  .note {
+    background: #fffbeb; border-left: 4px solid #f59e0b; padding: 8px 12px;
+    border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 9.5pt;
+  }
+  .pagebreak { page-break-before: always; }
+  .toc { columns: 2; font-size: 10pt; }
+  .toc li { margin-bottom: 4px; }
+  .small { font-size: 9pt; color: #6b7280; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <h1>Quizora</h1>
+  <h2>Backend API — Technical Documentation</h2>
+  <div class="badge">Phase 1 (MVP) · Spring Boot 3.5 · PostgreSQL</div>
+  <div class="meta">
+    Every file, service and endpoint explained<br><br>
+    Generated: 2 October 2026<br>
+    Location: <code>C:\Users\agbes\Desktop\Quizora</code>
+  </div>
+</div>
+
+<!-- ============ TOC ============ -->
+<h1 class="doc">Table of Contents</h1>
+<ul class="toc">
+  <li>1. Overview &amp; Tech Stack</li>
+  <li>2. Project Structure</li>
+  <li>3. Root &amp; Configuration Files</li>
+  <li>4. <span class="mono">config/</span> — Security &amp; Seed Data</li>
+  <li>5. <span class="mono">security/</span> — JWT Authentication</li>
+  <li>6. <span class="mono">domain/</span> — Entities &amp; Enums</li>
+  <li>7. <span class="mono">repository/</span> — Data Access</li>
+  <li>8. <span class="mono">dto/</span> — Request/Response Contracts</li>
+  <li>9. <span class="mono">exception/</span> — Error Handling</li>
+  <li>10. <span class="mono">service/</span> — Business Logic (11 services)</li>
+  <li>11. <span class="mono">controller/</span> — REST Endpoints</li>
+  <li>12. Tests</li>
+  <li>13. Demo Accounts &amp; Seeded Data</li>
+  <li>14. API Reference Summary</li>
+</ul>
+
+<!-- ============ 1. OVERVIEW ============ -->
+<h1 class="doc pagebreak">1. Overview &amp; Tech Stack</h1>
+<p>
+  <b>Quizora</b> is a past-questions learning platform where students prepare for external
+  examinations (BECE now, WASSCE later) by solving past questions with timers, analytics and
+  institutional monitoring. This backend implements <b>Phase 1 (MVP)</b>: authentication, courses,
+  a question bank, a quiz engine, subscriptions, institutional licensing and reporting.
+</p>
+<table>
+  <tr><th>Layer</th><th>Choice</th><th>Notes</th></tr>
+  <tr><td>Language</td><td>Java 17+ (runs on JDK 17–25)</td><td>Compiled to target 17</td></tr>
+  <tr><td>Framework</td><td>Spring Boot 3.5.16</td><td>Web, Data JPA, Security, Validation</td></tr>
+  <tr><td>Database</td><td>PostgreSQL (default) · H2 in-memory</td><td>H2 powers the <code>demo</code> profile and all tests</td></tr>
+  <tr><td>Auth</td><td>JWT — HS256 (jjwt 0.12.7)</td><td>Stateless, role-based access control</td></tr>
+  <tr><td>Reports</td><td>CSV (built-in) + PDF (OpenPDF 1.3.43)</td><td>Institutional export downloads</td></tr>
+  <tr><td>Build</td><td>Maven wrapper (<code>./mvnw</code>)</td><td>No Maven install needed</td></tr>
+</table>
+
+<h4>Architecture (classic 3-layer)</h4>
+<pre>HTTP Client (web / mobile / curl)
+      │  Authorization: Bearer &lt;jwt&gt;
+      ▼
+Controller  ── validates input, maps to DTOs, chooses status codes
+      ▼
+Service     ── all business rules, transactions, grading, licensing
+      ▼
+Repository  ── Spring Data JPA interfaces (no SQL boilerplate)
+      ▼
+PostgreSQL / H2</pre>
+<p class="small">Cross-cutting: JWT filter (auth), GlobalExceptionHandler (uniform JSON errors), DataSeeder (demo data), @Scheduled sweep (subscription expiry).</p>
+
+<!-- ============ 2. STRUCTURE ============ -->
+<h1 class="doc">2. Project Structure</h1>
+<pre>Quizora/
+├── pom.xml                     # dependencies &amp; build config
+├── mvnw / mvnw.cmd / .mvn/     # Maven wrapper (no install needed)
+├── docker-compose.yml          # PostgreSQL 16 for local dev
+├── README.md                   # quick start + API reference
+├── .gitignore
+├── docs/                       # this document
+└── src/
+    ├── main/
+    │   ├── java/com/quizora/backend/
+    │   │   ├── QuizoraApplication.java     # entry point
+    │   │   ├── config/        (2 files)    # SecurityConfig, DataSeeder
+    │   │   ├── security/      (5 files)    # JWT service/filter/principal
+    │   │   ├── domain/       (17 files)    # 9 entities + 8 enums
+    │   │   ├── repository/    (9 files)    # JPA repositories
+    │   │   ├── dto/           (8 files)    # request/response records
+    │   │   ├── exception/     (6 files)    # error handling
+    │   │   ├── service/      (11 files)    # business logic
+    │   │   └── controller/    (8 files)    # REST endpoints
+    │   └── resources/
+    │       ├── application.yml             # PostgreSQL (default)
+    │       └── application-demo.yml         # H2 in-memory (demo)
+    └── test/java/…                          # 2 test classes (4 tests)</pre>
+<p><b>78 project files total.</b> Conventions: one public class per file; DTOs grouped as nested records inside a final class per feature area; services own all transactions; controllers never touch repositories directly.</p>
+
+<!-- ============ 3. ROOT FILES ============ -->
+<h1 class="doc pagebreak">3. Root &amp; Configuration Files</h1>
+
+<div class="filebox">
+  <h3 class="file">pom.xml <span class="tag cfg">BUILD</span></h3>
+  <p>Maven build descriptor. Inherits the <b>Spring Boot 3.5.16</b> parent (dependency versions managed centrally), targets <b>Java 17</b>, and declares: spring-boot-starter-web/data-jpa/security/validation, <b>jjwt 0.12.7</b> (JWT), <b>OpenPDF 1.3.43</b> (report export), <b>PostgreSQL</b> driver, <b>H2</b> (demo/tests), Lombok-free (plain getters/setters), plus spring-boot-starter-test.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">mvnw / mvnw.cmd / .mvn/ <span class="tag cfg">BUILD</span></h3>
+  <p>Maven Wrapper — pins Maven 3.9.x and downloads it on first use, so any machine with a JDK can build with <code>./mvnw test</code> or <code>./mvnw spring-boot:run</code> without installing Maven.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">docker-compose.yml <span class="tag cfg">INFRA</span></h3>
+  <p>One-command <b>PostgreSQL 16</b> for production-like local runs: exposes port 5432, database <code>quizora</code>, user/password <code>postgres/postgres</code>, a named volume for data persistence. Usage: <code>docker compose up -d</code> then <code>./mvnw spring-boot:run</code>.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">src/main/resources/application.yml <span class="tag cfg">CONFIG</span></h3>
+  <p>Default profile configuration:</p>
+  <ul>
+    <li><b>Datasource</b> — PostgreSQL via env vars <code>DB_URL</code>/<code>DB_USER</code>/<code>DB_PASSWORD</code> (sensible localhost defaults).</li>
+    <li><b>JPA</b> — <code>ddl-auto: update</code> (schema auto-sync for development; swap to Flyway/Liquibase before production), <code>open-in-view: false</code>, UTC timezone, ISO date serialization.</li>
+    <li><b>quizora.security.jwt</b> — HS256 secret from <code>JWT_SECRET</code> (dev fallback ≥32 chars), token lifetime 24 h.</li>
+    <li><b>quizora.cors.allowed-origins</b> — from <code>CORS_ORIGINS</code>, default <code>*</code>.</li>
+    <li><b>quizora.seed.enabled=true</b> — toggles DataSeeder; <b>quizora.subscription.trial-days=7</b> — free trial length.</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">src/main/resources/application-demo.yml <span class="tag cfg">CONFIG</span></h3>
+  <p>The zero-setup <code>demo</code> profile: swaps the datasource to <b>in-memory H2</b> in PostgreSQL compatibility mode (<code>MODE=PostgreSQL</code>), <code>create-drop</code> schema, enables the H2 web console. Every run starts fresh and re-seeds demo data — ideal for local exploration and for the integration tests.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">README.md <span class="tag cfg">DOCS</span></h3>
+  <p>Team-facing guide: tech stack, quick start (demo vs PostgreSQL), demo accounts, implemented features, full API reference tables, project structure and the phase roadmap.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizoraApplication.java <span class="tag cfg">ENTRY</span></h3>
+  <p>Spring Boot entry point (<code>@SpringBootApplication</code>). Also carries <b><code>@EnableScheduling</code></b>, which activates the nightly cron job that expires ended subscriptions (see <code>SubscriptionService</code>).</p>
+</div>
+
+<!-- ============ 4. CONFIG ============ -->
+<h1 class="doc pagebreak">4. <span class="mono" style="font-size:14pt">config/</span> — Security &amp; Seed Data</h1>
+
+<div class="filebox">
+  <h3 class="file">SecurityConfig.java <span class="tag sec">SECURITY</span></h3>
+  <p>The heart of the security setup (<code>@Configuration @EnableWebSecurity @EnableMethodSecurity</code>). Three beans:</p>
+  <h4><code>filterChain(HttpSecurity)</code></h4>
+  <ul>
+    <li>Stateless sessions (no cookies — JWT only), CSRF disabled (not needed for token auth).</li>
+    <li><b>Route rules:</b> <code>/api/auth/**</code>, <code>/actuator/health</code>, <code>/h2-console/**</code> and all OPTIONS preflights are <b>public</b>; <code>/api/admin/**</code> requires role <b>ADMIN</b>; <b>everything else requires authentication</b>.</li>
+    <li>Inserts <code>JwtAuthenticationFilter</code> before Spring's username/password filter.</li>
+    <li>Custom JSON 401/403 bodies (never HTML error pages), frame-options <code>sameOrigin</code> so the H2 console works.</li>
+  </ul>
+  <h4><code>corsConfigurationSource()</code></h4>
+  <p>Origins from <code>quizora.cors.allowed-origins</code> (comma-separated), all standard methods/headers allowed. <b><code>allowCredentials=false</code></b> deliberately — JWT rides in the <code>Authorization</code> header, and Spring rejects wildcard origins combined with credentials.</p>
+  <h4><code>passwordEncoder()</code></h4>
+  <p><b>BCrypt</b> — all stored passwords are salted hashes; plaintext never persisted.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">DataSeeder.java <span class="tag cfg">SEED</span> <span class="small">239 lines</span></h3>
+  <p>A <code>CommandLineRunner</code> that runs on startup when <code>quizora.seed.enabled=true</code> (and only if the data is absent — safe to re-run). Four phases:</p>
+  <ol>
+    <li><b>seedUsers()</b> — platform admin, demo student (yearly subscription pre-activated), institution admin and an institution student.</li>
+    <li><b>seedQuotes()</b> — 12 motivational quotes that power the daily dashboard quote.</li>
+    <li><b>seedCoursesAndQuestions()</b> — 6 JHS subjects (Integrated Science, Maths, English, Social Studies, Creative Arts, Ghanaian Language) with <b>44 BECE-style objective questions</b> across the 2023 &amp; 2024 papers — each with 4 options, a correct answer and an explanation.</li>
+    <li><b>seedInstitution()</b> — "Demo JHS Accra" plus licence code <code>DEMO-CODE-1234</code> (20 seats, valid 2026-01-01 → 2027-12-31).</li>
+  </ol>
+</div>
+
+<!-- ============ 5. SECURITY ============ -->
+<h1 class="doc pagebreak">5. <span class="mono" style="font-size:14pt">security/</span> — JWT Authentication</h1>
+<p>How a request is authenticated, step by step:</p>
+<pre>1. Client logs in  ──► AuthService verifies BCrypt hash
+2. JwtService.generateToken(user) signs HS256 JWT (id + email + role, 24 h)
+3. Client sends     Authorization: Bearer &lt;token&gt;   on every request
+4. JwtAuthenticationFilter parses &amp; verifies the token
+5. QuizoraUserDetails placed in SecurityContext  →  @CurrentUser injects User</pre>
+
+<div class="filebox">
+  <h3 class="file">JwtService.java <span class="tag sec">SECURITY</span></h3>
+  <ul>
+    <li><code>generateToken(User)</code> — signs a JWT with subject=email, claims <code>uid</code> &amp; <code>role</code>, 24 h expiry (configurable <code>expiration-ms</code>).</li>
+    <li><code>parse(String)</code> — verifies signature + expiry and returns the claims (throws on invalid tokens).</li>
+    <li><code>getExpirationMs()</code> — surfaced to clients so they can show token lifetime / schedule refresh.</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">JwtAuthenticationFilter.java <span class="tag sec">SECURITY</span></h3>
+  <p>A <code>OncePerRequestFilter</code> that runs before authorization. Reads the <code>Authorization: Bearer …</code> header, parses the token, loads the user via <code>QuizoraUserDetailsService</code>, and — only if the user isn't already in the SecurityContext — sets the authentication. Malformed/expired tokens are silently ignored so the request falls through to the 401 entry point.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizoraUserDetails.java <span class="tag sec">SECURITY</span></h3>
+  <p>Implements Spring's <code>UserDetails</code>: wraps the DB user as <code>id</code>, <code>role</code>, email (username), password hash. Authorities are derived from the role (<code>ROLE_STUDENT</code> / <code>ROLE_INSTITUTION_ADMIN</code> / <code>ROLE_ADMIN</code>), which is what makes <code>hasRole("ADMIN")</code> work.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizoraUserDetailsService.java <span class="tag sec">SECURITY</span></h3>
+  <p>Bridges Spring Security to the <code>UserRepository</code>: <code>loadUserByUsername(email)</code> (used by the filter; case-insensitive lookup with join-fetch of the institution to avoid lazy-init issues) and <code>loadByEmail</code> for internal use. Throws <code>UsernameNotFoundException</code> when unknown.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">CurrentUser.java <span class="tag sec">SECURITY</span></h3>
+  <p>A small helper injected into controllers/services: <code>get()</code> returns the authenticated <code>User</code> or throws 401/403; <code>find()</code> returns <code>Optional</code>. Backed by <code>UserRepository.findWithInstitution</code> (join fetch) so lazy relationships are already loaded.</p>
+</div>
+
+<!-- ============ 6. DOMAIN ============ -->
+<h1 class="doc pagebreak">6. <span class="mono" style="font-size:14pt">domain/</span> — Entities &amp; Enums (17 files)</h1>
+
+<h2 class="section">Entities (9)</h2>
+
+<div class="filebox">
+  <h3 class="file">User.java <span class="tag ent">ENTITY</span></h3>
+  <p>Account record: <code>id</code>, <code>email</code> (unique, case-insensitive), <code>passwordHash</code> (BCrypt), <code>fullName</code>, <code>role</code> (enum), optional <code>institution</code> and the <code>licenseCode</code> used to join one. Every quiz, subscription and seat belongs to a user.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">Institution.java <span class="tag ent">ENTITY</span></h3>
+  <p>A school/organisation: <code>name</code>, <code>contactName</code>, <code>contactEmail</code>, <code>phone</code>. Owns licence codes and its students; powers the institutional portal and reports.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">LicenseCode.java <span class="tag ent">ENTITY</span></h3>
+  <p>Bulk-seat licence: unique <code>code</code> (format <code>QZRA-XXXX-XXXX</code>), parent <code>institution</code>, <b><code>totalSeats</code>/<code>usedSeats</code></b>, validity window <code>validFrom</code>→<code>validUntil</code>, <code>status</code> (LicenseStatus). A student "consumes" one seat when registering with the code.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">Subscription.java <span class="tag ent">ENTITY</span></h3>
+  <p>Access grant for one user: <code>plan</code> (MONTHLY/YEARLY/TRIAL — PlanType), <code>startDate</code>, <code>endDate</code>, <code>paymentRef</code> (mock <code>MOCK-PAY-…</code> today), <code>status</code> (SubscriptionStatus). Expiry is checked lazily on read and swept nightly.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">Course.java <span class="tag ent">ENTITY</span></h3>
+  <p>A subject/paper: <code>name</code> ("Integrated Science"), unique <code>code</code> ("SCIENCE"), <code>description</code>, <code>level</code> (JHS/SHS — Level enum, SHS reserved for Phase 3), <code>createdAt</code>. Parent of all its questions.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">Question.java <span class="tag ent">ENTITY</span></h3>
+  <p>A past question: <code>course</code>, <b><code>examYear</code></b> (<i>column is <code>exam_year</code> because <code>year</code> is a reserved word in H2/SQL</i>), <code>section</code> (OBJECTIVE now / SUBJECTIVE in Phase 2), <code>questionText</code>, four options <code>optionA–D</code>, <code>correctOption</code> (AnswerOption enum), <code>explanation</code> shown after submission, <code>marks</code> (default 1), <code>createdAt</code>. Helper <code>optionAt(answer)</code> resolves an option letter to its text. Indexed on (course_id, exam_year).</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizAttempt.java <span class="tag ent">ENTITY</span></h3>
+  <p>One sitting of a paper: <code>user</code>, <code>course</code>, <code>exam_year</code>, <code>timed</code> flag + <code>timeLimitSeconds</code> (server-authoritative clock), <code>status</code> (AttemptStatus: IN_PROGRESS → SUBMITTED/EXPIRED), <code>startedAt</code>/<code>submittedAt</code>, results <code>totalQuestions</code>, <code>answeredCount</code>, <code>correctCount</code>, <code>scorePercent</code>, <code>durationSeconds</code>. Domain logic lives on the entity: <code>expiresAt()</code> computes the deadline and <code>isExpiredNow()</code> tells the service when to auto-grade.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">AttemptAnswer.java <span class="tag ent">ENTITY</span></h3>
+  <p>One saved answer inside an attempt: link to <code>attempt</code> + <code>question</code>, the <code>selectedOption</code>, whether it was <code>correct</code>, and <code>timeSpentSeconds</code>. Rows are written as the student answers (so an expiry still captures partial work), then graded results are computed on submit.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">MotivationalQuote.java <span class="tag ent">ENTITY</span></h3>
+  <p>Simple <code>text</code> + <code>author</code> row; 12 seeded quotes rotated deterministically once per day for the dashboard.</p>
+</div>
+
+<h2 class="section">Enums (8)</h2>
+<table>
+  <tr><th>File</th><th>Values</th><th>Purpose</th></tr>
+  <tr><td>Role</td><td>STUDENT, INSTITUTION_ADMIN, ADMIN</td><td>Access level; drives JWT authorities &amp; route rules</td></tr>
+  <tr><td>Level</td><td>JHS, SHS</td><td>Course level (SHS reserved for WASSCE phase)</td></tr>
+  <tr><td>QuestionSection</td><td>OBJECTIVE, SUBJECTIVE</td><td>Phase 1 uses OBJECTIVE only</td></tr>
+  <tr><td>AnswerOption</td><td>A, B, C, D</td><td>MCQ option letter</td></tr>
+  <tr><td>AttemptStatus</td><td>IN_PROGRESS, SUBMITTED, EXPIRED</td><td>Quiz attempt lifecycle</td></tr>
+  <tr><td>PlanType</td><td>TRIAL, MONTHLY, YEARLY</td><td>Subscription plan</td></tr>
+  <tr><td>SubscriptionStatus</td><td>ACTIVE, EXPIRED, CANCELLED…</td><td>Subscription state</td></tr>
+  <tr><td>LicenseStatus</td><td>ACTIVE, EXHAUSTED, EXPIRED…</td><td>Licence state (seat count / dates)</td></tr>
+</table>
+
+<!-- ============ 7. REPOSITORY ============ -->
+<h1 class="doc pagebreak">7. <span class="mono" style="font-size:14pt">repository/</span> — Data Access (9 files)</h1>
+<p>All repositories extend <code>JpaRepository&lt;Entity, Long&gt;</code>, inheriting CRUD + pagination. Derived queries are declared as method signatures — Spring Data implements them automatically. Custom queries use <code>@Query</code>/<code>@Modifying</code>.</p>
+<table>
+  <tr><th>Repository</th><th>Custom methods</th></tr>
+  <tr><td>UserRepository</td><td><code>existsByEmailIgnoreCase</code> (registration check), <code>findWithInstitution</code> (join fetch — avoids LazyInit), <code>countByRole</code>, <code>countByInstitutionId</code>, <code>countByInstitutionIdAndRole</code> (student-only counts for reports)</td></tr>
+  <tr><td>CourseRepository</td><td><code>existsByCodeIgnoreCase</code>, plus year/aggregation queries feeding the courses &amp; years endpoints</td></tr>
+  <tr><td>QuestionRepository</td><td><code>countByCourseIdAndYear</code>, <code>countByCourseId</code> (question counts shown on courses), selection of a paper's questions for a quiz</td></tr>
+  <tr><td>QuizAttemptRepository</td><td>Paged history per user, recent attempts, aggregate stats for dashboard/progress/institution reports</td></tr>
+  <tr><td>AttemptAnswerRepository</td><td><code>countByAttemptId</code>, <code>countByAttemptIdAndCorrectTrue</code> (answer-vs-total checks)</td></tr>
+  <tr><td>SubscriptionRepository</td><td><code>findByUserId</code> and the <b><code>expireEnded()</code> @Modifying @Query</b> used by the nightly sweep to flip ended rows to EXPIRED in one statement</td></tr>
+  <tr><td>InstitutionRepository</td><td>Lookups by contact/name for uniqueness</td></tr>
+  <tr><td>LicenseCodeRepository</td><td><code>findByCode</code> (registration validation), seat-used sums</td></tr>
+  <tr><td>MotivationalQuoteRepository</td><td><code>count()</code> + ordered list for deterministic daily rotation; <code>findAll</code> fallback</td></tr>
+</table>
+
+<!-- ============ 8. DTO ============ -->
+<h1 class="doc pagebreak">8. <span class="mono" style="font-size:14pt">dto/</span> — Request/Response Contracts (8 files)</h1>
+<p>DTOs are Java <b>records</b> grouped in final classes (one per feature), so an API contract is immutable and self-documenting. Request records carry <code>jakarta.validation</code> annotations (<code>@NotBlank</code>, <code>@Email</code>, <code>@Size</code>, <code>@Min</code>…) enforced automatically by <code>@Valid</code> in the controllers. <b>Correct answers never appear in quiz-facing DTOs</b> — only in the post-submit review and admin listings.</p>
+<table>
+  <tr><th>File</th><th>Key records</th></tr>
+  <tr><td>AuthDtos</td><td><code>RegisterRequest</code>, <code>InstitutionalRegisterRequest</code>, <code>LoginRequest</code>, <code>JoinCodeRequest</code>, <code>SubscribeRequest</code>, <code>UserDto</code>, <code>SubscriptionDto</code>, <code>AuthResponse</code> (JWT + profile)</td></tr>
+  <tr><td>CourseDtos</td><td><code>CourseResponse</code> (with <code>questionCount</code> + available <code>years</code>), <code>YearResponse</code></td></tr>
+  <tr><td>QuizDtos</td><td><code>StartRequest/Response</code>, <code>QuestionResponse</code> (one question, no correct answer, includes <code>remainingSeconds</code>), <code>AnswerRequest/Response</code>, <code>ReviewItem</code> (correct + explanation), <code>ResultResponse</code>, <code>AttemptSummary</code></td></tr>
+  <tr><td>DashboardDtos</td><td><code>DashboardResponse</code> (greeting, quote, analytics, subscription), <code>QuoteDto</code>, <code>AnalyticsDto</code> (accuracy, average score, streak…)</td></tr>
+  <tr><td>ProgressDtos</td><td><code>ProgressResponse</code> = <code>TotalsDto</code> + <code>CourseProgressDto[]</code> + <code>TrendPointDto[]</code> (daily graph) + recent attempts</td></tr>
+  <tr><td>InstitutionDtos</td><td><code>CreateInstitutionRequest</code>, <code>CreateLicenseRequest</code>, <code>LicenseDto</code> (seat usage), <code>InstitutionResponse</code>, <code>StudentDto</code> (per-student snapshot), <code>ReportSummaryResponse</code></td></tr>
+  <tr><td>AdminDtos</td><td><code>CreateCourseRequest</code>, <code>QuestionRequest</code>, <code>BulkQuestionRequest/Item</code> (full-paper upload), <code>AdminQuestionResponse</code> (includes correct answer), <code>UserResponse</code>, <code>ActivateSubscriptionRequest</code>, <code>AdminStatsResponse</code>, <code>MessageResponse</code></td></tr>
+  <tr><td>Mappers</td><td>Static entity→DTO converters (e.g. <code>attemptSummary(QuizAttempt)</code>) shared by services</td></tr>
+</table>
+
+<!-- ============ 9. EXCEPTIONS ============ -->
+<h1 class="doc pagebreak">9. <span class="mono" style="font-size:14pt">exception/</span> — Error Handling (6 files)</h1>
+<p>Services throw typed exceptions; one <code>@RestControllerAdvice</code> turns them into a uniform JSON body:</p>
+<pre>{ "status": 404, "error": "Not Found",
+  "message": "Course not found: 99", "path": "/api/courses/99",
+  "timestamp": "2026-10-02T10:30:00" }</pre>
+<div class="filebox">
+  <h3 class="file">ApiException.java <span class="tag cfg">BASE</span></h3>
+  <p>Base runtime exception carrying an HTTP <code>HttpStatus</code> + message — the common parent for all typed errors below.</p>
+  <h3 class="file">NotFoundException.java <span class="tag cfg">404</span></h3>
+  <p>Resource doesn't exist (e.g. "Question not found: 12").</p>
+  <h3 class="file">BadRequestException.java <span class="tag cfg">400</span></h3>
+  <p>Semantically invalid input (e.g. answering a question that isn't in the attempt).</p>
+  <h3 class="file">ForbiddenException.java <span class="tag cfg">403</span></h3>
+  <p>Authenticated but not allowed (e.g. an institution admin touching another school's data).</p>
+  <h3 class="file">ConflictException.java <span class="tag cfg">409</span></h3>
+  <p>Duplicate resource (e.g. email already registered, duplicate course code).</p>
+</div>
+<div class="filebox">
+  <h3 class="file">GlobalExceptionHandler.java <span class="tag cfg">ADVICE</span></h3>
+  <p>Maps every failure path to the JSON shape above: <code>ApiException</code> → its status; <code>MethodArgumentNotValidException</code> → 400 with each field message joined (<code>"email: must be a valid email; …"</code>); <code>BadCredentialsException</code> → 401 "Invalid email or password" (never reveals which half was wrong); <code>AccessDeniedException</code> → 403; any other <code>Exception</code> → 500 with a safe message.</p>
+</div>
+
+<!-- ============ 10. SERVICES ============ -->
+<h1 class="doc pagebreak">10. <span class="mono" style="font-size:14pt">service/</span> — Business Logic (11 files)</h1>
+<p>Services hold <b>all</b> business rules and are the transaction boundary (<code>@Transactional</code> on writes, <code>@Transactional(readOnly = true)</code> on reads — which also fixes lazy-loading and enables Hibernate read optimizations). Controllers stay thin; repositories never leak upward.</p>
+
+<div class="filebox">
+  <h3 class="file">AuthService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Everything about accounts and sign-in.</p>
+  <ul>
+    <li><code>register()</code> — individual sign-up: validates uniqueness (case-insensitive email), BCrypt-hashes the password, creates the user, and grants a <b>7-day free trial</b> via <code>SubscriptionService.createTrial()</code>; returns JWT + profile.</li>
+    <li><code>registerInstitutional()</code> — same flow but requires a valid licence code (<code>requireUsableLicense</code>: exists, active, seats left, within validity window), links the institution, and <b>consumes one seat</b>; grants an institutional (licence-backed) subscription.</li>
+    <li><code>login()</code> — verifies credentials (401 on bad password), returns token response.</li>
+    <li><code>joinCode()</code> — lets an existing student link their account to an institution later with a licence code.</li>
+    <li><code>toUserDto()</code> — builds the profile DTO (incl. subscription with <code>daysRemaining</code>).</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">SubscriptionService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Access control &amp; the subscription lifecycle — the future Paystack/MoMo integration point.</p>
+  <ul>
+    <li><code>requireActive(user)</code> — gate called before starting a quiz; throws 403 when there is no active subscription.</li>
+    <li><code>createTrial()</code> — 7 days from today (<code>quizora.subscription.trial-days</code>).</li>
+    <li><code>createInstitutional()</code> — subscription spanning the licence's validity window.</li>
+    <li><code>activate(user, plan, days, paymentRef)</code> — activates MONTHLY (30 d) / YEARLY (365 d) with a <b>mock payment ref</b> (<code>MOCK-PAY-…</code>); if an active sub exists, the new period <b>extends from the current end date</b> (never shortens what the user already paid for).</li>
+    <li><code>lazyExpire()</code> — flips a stale row to EXPIRED whenever it's read.</li>
+    <li><b><code>expireEndedSubscriptions()</code></b> — <code>@Scheduled(cron "0 0 3 * * *")</code> nightly sweep at 03:00 marking all ended subscriptions EXPIRED.</li>
+  </ul>
+  <div class="note"><b>Swapping in real payments later:</b> keep this service's lifecycle; replace the mock <code>activate()</code> call with a Paystack/MoMo webhook that invokes the same method with the real transaction reference.</div>
+</div>
+
+<div class="filebox">
+  <h3 class="file">CourseService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Read side of the courses module: <code>list()</code> (every subject with its <code>questionCount</code> and available exam <code>years</code>), <code>get(id)</code> detail, <code>years(id)</code> — per-year question counts so the UI can enable/disable year buttons, and <code>requireCourse()</code> used by quiz/admin flows (404 if missing).</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizService.java <span class="tag svc">SERVICE</span> <span class="small">largest service — the quiz engine</span></h3>
+  <p>Implements the exam experience end-to-end with <b>server-authoritative timing and grading</b> (a client can never see or fake the correct answer or the clock).</p>
+  <ul>
+    <li><code>start()</code> — checks subscription, loads the paper's questions for (course, year), creates a <code>QuizAttempt</code> (optionally timed) and returns metadata: attempt id, total questions, <code>expiresAt</code>.</li>
+    <li><code>question(attemptId, index)</code> — serves <b>one question at a time</b>: text + four options + the student's saved answer + <code>remainingSeconds</code>. Ownership check (<code>requireOwned</code>) and in-progress check; <b>never includes <code>correctOption</code></b>. If the clock has run out it auto-submits first.</li>
+    <li><code>answer()</code> — saves/overwrites the selected option with time spent (upsert by question).</li>
+    <li><code>submit()</code> — idempotent: grades all answers server-side, computes counts/score/duration, marks status SUBMITTED (or EXPIRED if the timer elapsed), and returns the full result.</li>
+    <li><code>result()</code> — the graded paper: totals, score percent, and a <b>review list</b> with the correct option + explanation per question.</li>
+    <li><code>history()</code> — paginated past attempts.</li>
+    <li>Privates: <code>requireOwned</code>, <code>requireInProgress</code>, <code>finalizeAttempt</code> (grading), <code>buildResult</code>, <code>remainingSeconds</code>.</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">DashboardService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Powers the student home screen in one call (<code>dashboard(user)</code>): time-of-day <b>greeting</b>, profile, the <b>daily quote</b>, <b>analytics</b> (courses attempted, questions attempted, accuracy %, average score, total time, study <b>streak</b> — consecutive days with at least one attempt, computed by <code>streakDays()</code>), and the current subscription summary.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">ProgressService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Analytics behind the Progress page (all read-only transactions):</p>
+  <ul>
+    <li><code>progress()</code> — overall <code>TotalsDto</code> (attempts, questions, accuracy, time spent), <b>per-course breakdown</b>, a <b>daily trend</b> (<code>buildTrend()</code>: attempts + average score per day for the graph), and recent attempts.</li>
+    <li><code>attemptHistory()</code> — paginated attempt list.</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuoteService.java <span class="tag svc">SERVICE</span></h3>
+  <p><code>todayQuote()</code> — deterministic daily rotation: index = days-since-epoch mod quote count, so every client sees the same quote for a whole 24 h window with no per-request randomness. Falls back to a built-in quote if the table is empty. <code>validUntil</code> tells clients when it changes.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">InstitutionService.java <span class="tag svc">SERVICE</span></h3>
+  <p>The institutional (B2B) side:</p>
+  <ul>
+    <li><code>create()</code> — platform admin creates an institution + its admin account in one step.</li>
+    <li><code>get()</code> — overview with licence codes and seat usage (after <code>requireInstitutionAccess()</code>: only that institution's admin or a platform admin).</li>
+    <li><code>createLicense()</code> — generates a unique <code>QZRA-XXXX-XXXX</code> code (<code>generateCode()</code>/<code>randomBlock()</code> with collision retry) for N seats within a validity window.</li>
+    <li><code>students()</code> — per-student snapshots (attempts, accuracy, average score, last active, subscription status) built by <code>buildStudents()</code>, which <b>filters to Role.STUDENT</b> so the institution's own admin is excluded from their report.</li>
+    <li><code>summary()</code> — reporting-dashboard aggregates: totals, 30-day active students, accuracy, seats used/total.</li>
+  </ul>
+</div>
+
+<div class="filebox">
+  <h3 class="file">ReportService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Builds downloadable institution reports as <code>byte[]</code>:</p>
+  <ul>
+    <li><code>toCsv()</code> — header row + one row per student (name, email, attempts, questions, accuracy, average score, last active, subscription), RFC-4180 escaping for commas/quotes.</li>
+    <li><code>toPdf()</code> — OpenPDF document with a styled header (institution name, date) and a table of the same columns using <code>cell()</code> helpers.</li>
+  </ul>
+  <p>Both enforce <code>requireInstitutionAccess()</code> first — a school can only export its own data.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">AdminService.java <span class="tag svc">SERVICE</span></h3>
+  <p>Back-office operations for the platform admin:</p>
+  <ul>
+    <li><code>stats()</code> — dashboard counts: users, students, institution admins, institutions, courses, questions, attempts.</li>
+    <li><code>createCourse()</code> / <code>createQuestion()</code> — single additions with uniqueness validation (409 on duplicate course code).</li>
+    <li><code>createQuestionsBulk()</code> — <b>bulk paper upload</b>: a whole year's questions in one JSON payload; returns how many were created.</li>
+    <li><code>listQuestions(courseId?, year?)</code> — optional filters; <b>includes correct answers</b> (admin-only endpoint).</li>
+    <li><code>deleteQuestion()</code>, <code>listUsers(role?)</code>.</li>
+    <li><code>activateSubscription()</code> — manual activation/extension for a user (support tool, same extension semantics as self-service).</li>
+  </ul>
+</div>
+
+<!-- ============ 11. CONTROLLERS ============ -->
+<h1 class="doc pagebreak">11. <span class="mono" style="font-size:14pt">controller/</span> — REST Endpoints (8 files)</h1>
+<p>Thin layer: validate with <code>@Valid</code>, resolve the caller via <code>@CurrentUser</code>, delegate to a service, return DTOs. Access rules come from <code>SecurityConfig</code> + <code>@PreAuthorize</code>.</p>
+
+<div class="filebox">
+  <h3 class="file">AuthController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/auth — public</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>POST</td><td>/register</td><td>Individual sign-up → JWT + 7-day trial</td></tr>
+    <tr><td>POST</td><td>/register-institutional</td><td>Sign-up with licence code → consumes a seat</td></tr>
+    <tr><td>POST</td><td>/login</td><td>Email + password → JWT + profile</td></tr>
+    <tr><td>POST</td><td>/join-code</td><td>Student links an existing account to an institution</td></tr>
+    <tr><td>GET</td><td>/me</td><td>Current profile + subscription</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">SubscriptionController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/subscriptions</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>GET</td><td>/me</td><td>Current subscription (plan, status, days left)</td></tr>
+    <tr><td>POST</td><td>/subscribe</td><td><code>{"plan":"MONTHLY"|"YEARLY"}</code> — mock payment activation</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">CourseController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/courses</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>GET</td><td>/</td><td>Subjects with questionCount + available years</td></tr>
+    <tr><td>GET</td><td>/{id}</td><td>Course detail</td></tr>
+    <tr><td>GET</td><td>/{id}/years</td><td>Year selection with per-year question counts</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">QuizController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/quizzes</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>POST</td><td>/start</td><td><code>{"courseId":1,"year":2023,"timed":true,"timeLimitSeconds":600}</code></td></tr>
+    <tr><td>GET</td><td>/</td><td>My attempt history (paged)</td></tr>
+    <tr><td>GET</td><td>/{id}</td><td>Attempt metadata (resume)</td></tr>
+    <tr><td>GET</td><td>/{id}/questions/{index}</td><td>One question — <b>no correct answer</b></td></tr>
+    <tr><td>POST</td><td>/{id}/answers</td><td>Save an answer + time spent</td></tr>
+    <tr><td>POST</td><td>/{id}/submit</td><td>Grade &amp; close (idempotent)</td></tr>
+    <tr><td>GET</td><td>/{id}/result</td><td>Score + full review with explanations</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">DashboardController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/dashboard</span></h3>
+  <p><code>GET /api/dashboard</code> — greeting, daily quote, analytics widget and subscription in a single response.</p>
+</div>
+
+<div class="filebox">
+  <h3 class="file">ProgressController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/progress</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>GET</td><td>/</td><td>Totals, per-course breakdown, daily trend, recent attempts</td></tr>
+    <tr><td>GET</td><td>/attempts</td><td>Paginated attempt history</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">InstitutionController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/institutions — INSTITUTION_ADMIN or ADMIN</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>POST</td><td>/</td><td>Admin: create institution + admin account</td></tr>
+    <tr><td>GET</td><td>/{id}</td><td>Overview incl. licence codes &amp; seat usage</td></tr>
+    <tr><td>POST</td><td>/{id}/licenses</td><td>Generate a licence code</td></tr>
+    <tr><td>GET</td><td>/{id}/students</td><td>Students + progress snapshots</td></tr>
+    <tr><td>GET</td><td>/{id}/report/summary</td><td>Reporting dashboard data</td></tr>
+    <tr><td>GET</td><td>/{id}/report/export?format=csv|pdf</td><td>Downloadable report</td></tr>
+  </table>
+</div>
+
+<div class="filebox">
+  <h3 class="file">AdminController.java <span class="tag ctrl">CONTROLLER</span> <span class="small">/api/admin — ADMIN only</span></h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+    <tr><td>GET</td><td>/stats</td><td>Platform statistics</td></tr>
+    <tr><td>POST</td><td>/courses</td><td>Create course</td></tr>
+    <tr><td>POST</td><td>/questions</td><td>Add one question</td></tr>
+    <tr><td>POST</td><td>/questions/bulk</td><td>Upload a full paper (JSON array)</td></tr>
+    <tr><td>GET</td><td>/questions?courseId=&amp;year=</td><td>List incl. correct answers</td></tr>
+    <tr><td>DELETE</td><td>/questions/{id}</td><td>Delete question</td></tr>
+    <tr><td>GET</td><td>/users?role=</td><td>List users</td></tr>
+    <tr><td>POST</td><td>/subscriptions/activate</td><td>Manually activate/extend a subscription</td></tr>
+    <tr><td>POST</td><td>/institutions</td><td>Create institution</td></tr>
+  </table>
+</div>
+
+<!-- ============ 12. TESTS ============ -->
+<h1 class="doc pagebreak">12. Tests</h1>
+<div class="filebox">
+  <h3 class="file">QuizFlowIntegrationTest.java <span class="tag test">INTEGRATION</span></h3>
+  <p>Boots the whole app on the H2 <code>demo</code> profile and exercises the API over real HTTP (MockMvc). Coverage:</p>
+  <ul>
+    <li>Full student journey: register → login → list courses → start quiz → fetch questions → answer → submit → result with review/explanation → progress → dashboard.</li>
+    <li>Trial dates: <b>startDate = today, endDate = today + 7</b>.</li>
+    <li>Institutional journey: onboarding with licence code → seat consumed → institution overview → student list → CSV &amp; PDF exports.</li>
+    <li>RBAC: student gets <b>403</b> on <code>/api/admin/**</code>; bad password gets <b>401</b>; missing token gets <b>401</b>.</li>
+  </ul>
+</div>
+<div class="filebox">
+  <h3 class="file">QuoteServiceTest.java <span class="tag test">UNIT</span></h3>
+  <p>Verifies the daily quote rotation: same quote all day, changes on a different day (deterministic index), and a safe fallback when the table is empty.</p>
+</div>
+<p><b>Run:</b> <code>./mvnw test</code> → <b>4 tests, 0 failures, 0 errors</b>.</p>
+
+<!-- ============ 13. DEMO DATA ============ -->
+<h1 class="doc">13. Demo Accounts &amp; Seeded Data</h1>
+<table>
+  <tr><th>Role</th><th>Email</th><th>Password</th><th>Notes</th></tr>
+  <tr><td>Platform admin</td><td>admin@quizora.app</td><td>Admin@123</td><td>Full admin panel</td></tr>
+  <tr><td>Student</td><td>student@demo.com</td><td>Student@123</td><td>Yearly subscription pre-activated</td></tr>
+  <tr><td>Institution admin</td><td>school@demo.com</td><td>School@123</td><td>"Demo JHS Accra"</td></tr>
+  <tr><td>Institution student</td><td>kofi@demo.com</td><td>Student@123</td><td>Onboarded via licence code</td></tr>
+</table>
+<p><b>Licence code:</b> <code>DEMO-CODE-1234</code> — 20 seats, valid 2026-01-01 → 2027-12-31.<br>
+<b>Content:</b> 6 JHS subjects, 44 BECE-style objective questions (2023 &amp; 2024 papers), 12 motivational quotes.</p>
+
+<h4>Run it</h4>
+<pre># Zero setup (in-memory H2, auto-seeded)
+./mvnw spring-boot:run -Dspring-boot.run.profiles=demo
+
+# PostgreSQL
+docker compose up -d
+./mvnw spring-boot:run</pre>
+
+<!-- ============ 14. API SUMMARY ============ -->
+<h1 class="doc pagebreak">14. API Reference Summary</h1>
+<p>Base URL <code>http://localhost:8080</code> · send <code>Authorization: Bearer &lt;token&gt;</code> unless marked public · errors are uniform JSON.</p>
+<table>
+  <tr><th>Group</th><th>Endpoints</th></tr>
+  <tr><td>Auth (public)</td><td>POST /api/auth/register · POST /api/auth/register-institutional · POST /api/auth/login · POST /api/auth/join-code · GET /api/auth/me</td></tr>
+  <tr><td>Subscriptions</td><td>GET /api/subscriptions/me · POST /api/subscriptions/subscribe</td></tr>
+  <tr><td>Courses</td><td>GET /api/courses · GET /api/courses/{id} · GET /api/courses/{id}/years</td></tr>
+  <tr><td>Quizzes</td><td>POST /api/quizzes/start · GET /api/quizzes · GET /api/quizzes/{id} · GET /api/quizzes/{id}/questions/{index} · POST /api/quizzes/{id}/answers · POST /api/quizzes/{id}/submit · GET /api/quizzes/{id}/result</td></tr>
+  <tr><td>Dashboard</td><td>GET /api/dashboard</td></tr>
+  <tr><td>Progress</td><td>GET /api/progress · GET /api/progress/attempts</td></tr>
+  <tr><td>Institutions</td><td>POST /api/institutions · GET /api/institutions/{id} · POST /api/institutions/{id}/licenses · GET /api/institutions/{id}/students · GET /api/institutions/{id}/report/summary · GET /api/institutions/{id}/report/export</td></tr>
+  <tr><td>Admin (ADMIN)</td><td>GET /api/admin/stats · POST /api/admin/courses · POST /api/admin/questions · POST /api/admin/questions/bulk · GET /api/admin/questions · DELETE /api/admin/questions/{id} · GET /api/admin/users · POST /api/admin/subscriptions/activate · POST /api/admin/institutions</td></tr>
+</table>
+
+<div class="note">
+  <b>Roadmap:</b> Phase 2 — subjective questions (<code>QuestionSection.SUBJECTIVE</code> enum already exists). Phase 3 — WASSCE/SHS (<code>Level.SHS</code> exists). Payments — replace mock activation with Paystack/MoMo. Production — Flyway migrations, refresh tokens, rate limiting.
+</div>
+
+<p class="small" style="margin-top:30px; text-align:center;">Quizora Backend — Phase 1 MVP Documentation · Generated by Codebuff</p>
+
+</body>
+</html>
