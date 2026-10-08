@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation | Quizora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #172b4d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e8edf5;
+            padding: 20px 6%;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .confirmation-card {
+            width: 100%;
+            max-width: 540px;
+            background: white;
+            border: 1px solid #e8edf5;
+            border-radius: 22px;
+            padding: 42px 35px;
+            text-align: center;
+            box-shadow: 0 12px 45px rgba(15, 23, 42, 0.05);
+        }
+
+        .status-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 40px;
+            background: #eaf1ff;
+            color: #2563eb;
+        }
+
+        .status-icon.loading {
+            background: #eaf1ff;
+        }
+
+        .status-icon.success {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-icon.error {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #bfdbfe;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: clamp(24px, 4vw, 31px);
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .details {
+            background: #f8fafc;
+            border: 1px solid #e8edf5;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row span {
+            color: #64748b;
+        }
+
+        .detail-row strong {
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .button.secondary {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .button.secondary:hover {
+            background: #dbeafe;
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .notice {
+            font-size: 12px;
+            line-height: 1.7;
+            color: #64748b;
+            margin-top: 20px;
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .confirmation-card {
+                padding: 32px 22px;
+            }
+
+            .detail-row {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav">
+            <a href="Dashboard.html" class="logo">Quizora</a>
+            <a href="Dashboard.html" class="back-link">
+                Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="confirmation-card" aria-live="polite">
+
+            <div id="statusIcon" class="status-icon loading">
+                <div class="spinner"></div>
+            </div>
+
+            <h1 id="statusTitle">Verifying Your Payment</h1>
+
+            <p id="statusDescription" class="description">
+                Please wait while Quizora securely confirms your
+                payment and subscription status.
+            </p>
+
+            <div id="paymentDetails" class="details hidden">
+
+                <div class="detail-row">
+                    <span>Payment Reference</span>
+                    <strong id="paymentReference">—</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Subscription Plan</span>
+                    <strong id="subscriptionPlan">—</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Amount Paid</span>
+                    <strong id="amountPaid">—</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Payment Status</span>
+                    <strong>
+                        <span id="paymentStatus" class="status-badge">
+                            Successful
+                        </span>
+                    </strong>
+                </div>
+
+            </div>
+
+            <a href="Dashboard.html" id="dashboardButton" class="button hidden">
+                Continue to Dashboard
+            </a>
+
+            <button id="retryButton" class="button hidden" type="button">
+                Try Verification Again
+            </button>
+
+            <a href="payment.html" id="paymentButton" class="button secondary hidden">
+                Back to Subscription Plans
+            </a>
+
+            <p class="notice">
+                Your subscription is activated only after
+                Quizora's server confirms a successful payment.
+            </p>
+
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 Quizora. Learn. Practise. Improve.
+    </footer>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8080";
+        const AUTH_TOKEN_KEY = "quizoraToken";
+
+        const statusIcon = document.getElementById("statusIcon");
+        const statusTitle = document.getElementById("statusTitle");
+        const statusDescription =
+            document.getElementById("statusDescription");
+
+        const paymentDetails =
+            document.getElementById("paymentDetails");
+
+        const paymentReference =
+            document.getElementById("paymentReference");
+
+        const subscriptionPlan =
+            document.getElementById("subscriptionPlan");
+
+        const amountPaid =
+            document.getElementById("amountPaid");
+
+        const dashboardButton =
+            document.getElementById("dashboardButton");
+
+        const retryButton =
+            document.getElementById("retryButton");
+
+        const paymentButton =
+            document.getElementById("paymentButton");
+
+        function setLoading() {
+            statusIcon.className = "status-icon loading";
+            statusIcon.innerHTML = '<div class="spinner"></div>';
+
+            statusTitle.textContent = "Verifying Your Payment";
+
+            statusDescription.textContent =
+                "Please wait while Quizora securely confirms your payment.";
+
+            paymentDetails.classList.add("hidden");
+            dashboardButton.classList.add("hidden");
+            retryButton.classList.add("hidden");
+            paymentButton.classList.add("hidden");
+        }
+
+        function setSuccess(data, reference) {
+            statusIcon.className = "status-icon success";
+            statusIcon.textContent = "✓";
+
+            statusTitle.textContent = "Payment Successful!";
+
+            statusDescription.textContent =
+                "Your payment has been verified and your Quizora subscription is active.";
+
+            paymentReference.textContent =
+                data.reference || reference;
+
+            const plan = data.plan || data.subscriptionPlan;
+
+            subscriptionPlan.textContent =
+                plan === "MONTHLY"
+                    ? "Monthly Plan"
+                    : plan === "YEARLY"
+                        ? "Yearly Plan"
+                        : plan || "Subscription";
+
+            /*
+              The backend should return a formatted amount
+              such as "GHS 50.00" after verifying payment.
+            */
+            amountPaid.textContent =
+                data.formattedAmount || "Confirmed by Quizora";
+
+            paymentDetails.classList.remove("hidden");
+            dashboardButton.classList.remove("hidden");
+            retryButton.classList.add("hidden");
+            paymentButton.classList.add("hidden");
+        }
+
+        function setError(message) {
+            statusIcon.className = "status-icon error";
+            statusIcon.textContent = "!";
+
+            statusTitle.textContent = "Payment Not Yet Confirmed";
+
+            statusDescription.textContent =
+                message ||
+                "Quizora could not confirm your payment at this time.";
+
+            paymentDetails.classList.add("hidden");
+            dashboardButton.classList.remove("hidden");
+            retryButton.classList.remove("hidden");
+            paymentButton.classList.remove("hidden");
+        }
+
+        async function verifyPayment() {
+            setLoading();
+
+            const params = new URLSearchParams(
+                window.location.search
+            );
+
+            /*
+              Paystack commonly returns a reference
+              in the callback URL.
+            */
+            const reference =
+                params.get("reference") ||
+                params.get("trxref");
+
+            if (!reference) {
+                setError(
+                    "No payment reference was found. If you completed a payment, please contact Quizora support before trying to pay again."
+                );
+                retryButton.classList.add("hidden");
+                return;
+            }
+
+            const token = localStorage.getItem(AUTH_TOKEN_KEY);
+
+            if (!token) {
+                setError(
+                    "Your login session is unavailable. Please log in again to verify this payment."
+                );
+                retryButton.classList.add("hidden");
+                return;
+            }
+
+            try {
+                /*
+                  PROPOSED BACKEND ENDPOINT:
+        
+                  GET /api/payments/verify?reference=...
+        
+                  Expected verified success response:
+        
+                  {
+                    "verified": true,
+                    "status": "success",
+                    "subscriptionActive": true,
+                    "reference": "payment-reference",
+                    "plan": "MONTHLY",
+                    "formattedAmount": "GHS 50.00"
+                  }
+        
+                  This is an integration contract, not a
+                  confirmed existing backend endpoint.
+        
+                  Backend must:
+                  - Verify payment with Paystack securely.
+                  - Confirm payment belongs to logged-in user.
+                  - Check amount, currency and selected plan.
+                  - Activate subscription once only.
+                  - Return verified subscription status.
+                */
+
+                const url =
+                    `${API_BASE_URL}/api/payments/verify?reference=` +
+                    encodeURIComponent(reference);
+
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Accept": "application/json"
+                    },
+                    cache: "no-store"
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        "The server could not confirm this payment."
+                    );
+                }
+
+                const data = await response.json();
+
+                const verified =
+                    data.verified === true;
+
+                const successful =
+                    data.status === "success";
+
+                const subscriptionActive =
+                    data.subscriptionActive === true;
+
+                if (
+                    verified &&
+                    successful &&
+                    subscriptionActive
+                ) {
+                    setSuccess(data, reference);
+                } else {
+                    setError(
+                        "Your payment is pending or your subscription is not yet active. Please check again before making another payment."
+                    );
+                }
+
+            } catch (error) {
+                console.error("Payment verification error:", error);
+
+                setError(
+                    "We could not reach the verification service. If money was deducted, do not pay again yet. Please retry verification."
+                );
+            }
+        }
+
+        retryButton.addEventListener(
+            "click",
+            verifyPayment
+        );
+
+        verifyPayment();
+    </script>
+
+</body>
+
+</html>

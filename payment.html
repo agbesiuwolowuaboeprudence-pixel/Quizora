@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription & Payment | Quizora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #172b4d;
+            min-height: 100vh;
+        }
+
+        .payment-header {
+            background: white;
+            border-bottom: 1px solid #e8edf5;
+            padding: 20px 5%;
+        }
+
+        .nav-content {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #2563eb;
+        }
+
+        .payment-container {
+            max-width: 1000px;
+            margin: 45px auto;
+            padding: 0 20px 50px;
+        }
+
+        .page-intro {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #eaf1ff;
+            color: #2563eb;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .page-intro h1 {
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .page-intro p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .plan-card {
+            background: white;
+            padding: 28px;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            position: relative;
+            outline-offset: 4px;
+        }
+
+        .plan-card:hover {
+            border-color: #93b4fa;
+            transform: translateY(-2px);
+        }
+
+        .plan-card.selected {
+            border-color: #2563eb;
+            background: #fbfdff;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.09);
+        }
+
+        .plan-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .plan-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #eaf1ff;
+            font-size: 23px;
+        }
+
+        .plan-radio {
+            width: 21px;
+            height: 21px;
+            accent-color: #2563eb;
+            pointer-events: none;
+        }
+
+        .plan-card h3 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 23px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 14px;
+        }
+
+        .plan-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .payment-box {
+            background: white;
+            border: 1px solid #e8edf5;
+            padding: 28px;
+            border-radius: 18px;
+        }
+
+        .payment-box h2 {
+            font-size: 19px;
+            margin-bottom: 9px;
+        }
+
+        .box-description {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .method-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 13px;
+            margin-bottom: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .method-card.selected {
+            border-color: #2563eb;
+            background: #f5f9ff;
+        }
+
+        .method-card input {
+            accent-color: #2563eb;
+            width: 18px;
+            height: 18px;
+        }
+
+        .method-icon {
+            font-size: 25px;
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-info strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .method-info small {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 13px 0;
+            font-size: 13px;
+        }
+
+        .summary-row span {
+            color: #64748b;
+        }
+
+        .summary-row strong {
+            text-align: right;
+        }
+
+        .summary-divider {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 12px 0;
+        }
+
+        .total-row {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .total-row span {
+            color: #172b4d;
+        }
+
+        .pay-btn {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: 0.2s;
+        }
+
+        .pay-btn:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        .pay-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .secure-text {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 17px;
+        }
+
+        .payment-message {
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .payment-message.error {
+            color: #b91c1c;
+        }
+
+        .payment-message.success {
+            color: #15803d;
+        }
+
+        .benefits {
+            margin-top: 32px;
+            padding: 24px;
+            background: #eaf1ff;
+            border-radius: 16px;
+        }
+
+        .benefits h3 {
+            font-size: 17px;
+            margin-bottom: 17px;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .benefit {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .benefit span {
+            color: #2563eb;
+            margin-right: 7px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 750px) {
+
+            .plans-grid,
+            .payment-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-container {
+                margin-top: 30px;
+            }
+
+            .payment-box,
+            .plan-card {
+                padding: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="payment-header">
+        <div class="nav-content">
+            <a href="Dashboard.html" class="logo">Quizora</a>
+
+            <a href="Dashboard.html" class="back-link">
+                &larr; Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <main class="payment-container">
+
+        <div class="page-intro">
+            <span class="eyebrow">QUIZORA SUBSCRIPTIONS</span>
+
+            <h1>Invest in Your Learning</h1>
+
+            <p>
+                Choose the plan that works best for you and
+                enjoy access to Quizora's learning experience.
+            </p>
+        </div>
+
+        <h2 class="section-title">Choose Your Subscription</h2>
+
+        <section class="plans-grid" aria-label="Subscription plans">
+
+            <div class="plan-card selected" data-plan="MONTHLY" role="button" tabindex="0" aria-pressed="true">
+                <div class="plan-top">
+                    <div class="plan-icon">📅</div>
+                    <input type="radio" name="subscription" class="plan-radio" checked tabindex="-1"
+                        aria-label="Monthly">
+                </div>
+
+                <h3>Monthly Plan</h3>
+
+                <div class="plan-price">Monthly Subscription</div>
+
+                <p class="plan-description">
+                    Flexible access to Quizora's BECE practice
+                    questions, timed quizzes, results and
+                    learning progress tracking.
+                </p>
+            </div>
+
+            <div class="plan-card" data-plan="YEARLY" role="button" tabindex="0" aria-pressed="false">
+                <div class="plan-top">
+                    <div class="plan-icon">🎓</div>
+                    <input type="radio" name="subscription" class="plan-radio" tabindex="-1" aria-label="Yearly">
+                </div>
+
+                <h3>Yearly Plan</h3>
+
+                <div class="plan-price">Annual Subscription</div>
+
+                <p class="plan-description">
+                    Enjoy long-term access to Quizora's
+                    learning tools, practice exercises,
+                    exam preparation and performance tracking.
+                </p>
+            </div>
+
+        </section>
+
+        <section class="payment-layout">
+
+            <div class="payment-box">
+
+                <h2>Payment Method</h2>
+
+                <p class="box-description">
+                    Select how you would like to pay
+                    for your Quizora subscription.
+                </p>
+
+                <label class="method-card selected">
+                    <input type="radio" name="paymentMethod" value="momo" checked>
+
+                    <span class="method-icon">📱</span>
+
+                    <span class="method-info">
+                        <strong>Mobile Money</strong>
+                        <small>MTN MoMo, Telecel Cash and supported networks</small>
+                    </span>
+                </label>
+
+                <label class="method-card">
+                    <input type="radio" name="paymentMethod" value="card">
+
+                    <span class="method-icon">💳</span>
+
+                    <span class="method-info">
+                        <strong>Debit / Credit Card</strong>
+                        <small>Pay securely with a supported bank card</small>
+                    </span>
+                </label>
+
+            </div>
+
+            <div class="payment-box">
+
+                <h2>Order Summary</h2>
+
+                <p class="box-description">
+                    Review your subscription before continuing.
+                </p>
+
+                <div class="summary-row">
+                    <span>Subscription</span>
+                    <strong id="summaryPlan">Monthly Plan</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Billing Period</span>
+                    <strong id="summaryPeriod">1 Month</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Payment Method</span>
+                    <strong id="summaryMethod">Mobile Money</strong>
+                </div>
+
+                <hr class="summary-divider">
+
+                <div class="summary-row total-row">
+                    <span>Total Amount</span>
+                    <strong id="summaryAmount">Calculated at checkout</strong>
+                </div>
+
+                <button class="pay-btn" id="payButton" type="button">
+                    Proceed to Payment →
+                </button>
+
+                <p id="paymentMessage" class="payment-message" role="status" aria-live="polite"></p>
+
+                <p class="secure-text">
+                    🔒 Secure checkout powered by Paystack
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="benefits">
+            <h3>What You'll Enjoy with Quizora</h3>
+
+            <div class="benefit-grid">
+                <div class="benefit">
+                    <span>✓</span> BECE Past Questions
+                </div>
+
+                <div class="benefit">
+                    <span>✓</span> Timed Exam Practice
+                </div>
+
+                <div class="benefit">
+                    <span>✓</span> Progress Tracking
+                </div>
+
+                <div class="benefit">
+                    <span>✓</span> Performance Results
+                </div>
+
+                <div class="benefit">
+                    <span>✓</span> Practice Mode
+                </div>
+
+                <div class="benefit">
+                    <span>✓</span> Multiple Subjects
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 Quizora. Learn. Practise. Improve.
+    </footer>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8080";
+
+        // Match this key with the token saved by your login page.
+        const AUTH_TOKEN_KEY = "quizoraToken";
+
+        const planCards = document.querySelectorAll(".plan-card");
+        const methodCards = document.querySelectorAll(".method-card");
+
+        const summaryPlan = document.getElementById("summaryPlan");
+        const summaryPeriod = document.getElementById("summaryPeriod");
+        const summaryMethod = document.getElementById("summaryMethod");
+
+        const payButton = document.getElementById("payButton");
+        const paymentMessage = document.getElementById("paymentMessage");
+
+        let selectedPlan = "MONTHLY";
+        let selectedMethod = "momo";
+
+        function selectPlan(card) {
+            planCards.forEach(item => {
+                const isSelected = item === card;
+
+                item.classList.toggle("selected", isSelected);
+                item.setAttribute("aria-pressed", String(isSelected));
+
+                item.querySelector(".plan-radio").checked = isSelected;
+            });
+
+            selectedPlan = card.dataset.plan;
+
+            summaryPlan.textContent =
+                selectedPlan === "MONTHLY"
+                    ? "Monthly Plan"
+                    : "Yearly Plan";
+
+            summaryPeriod.textContent =
+                selectedPlan === "MONTHLY"
+                    ? "1 Month"
+                    : "12 Months";
+
+            clearMessage();
+        }
+
+        planCards.forEach(card => {
+            card.addEventListener("click", () => selectPlan(card));
+
+            card.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    selectPlan(card);
+                }
+            });
+        });
+
+        methodCards.forEach(card => {
+            const radio = card.querySelector('input[type="radio"]');
+
+            radio.addEventListener("change", () => {
+                methodCards.forEach(item => {
+                    item.classList.remove("selected");
+                });
+
+                card.classList.add("selected");
+
+                selectedMethod = radio.value;
+
+                summaryMethod.textContent =
+                    selectedMethod === "momo"
+                        ? "Mobile Money"
+                        : "Bank Card";
+
+                clearMessage();
+            });
+        });
+
+        function showMessage(message, type = "error") {
+            paymentMessage.textContent = message;
+            paymentMessage.className = "payment-message " + type;
+        }
+
+        function clearMessage() {
+            paymentMessage.textContent = "";
+            paymentMessage.className = "payment-message";
+        }
+
+        function getAuthToken() {
+            return localStorage.getItem(AUTH_TOKEN_KEY);
+        }
+
+        function validatePaystackUrl(checkoutUrl) {
+            const url = new URL(checkoutUrl);
+
+            const isPaystack =
+                url.hostname === "paystack.com" ||
+                url.hostname.endsWith(".paystack.com");
+
+            if (url.protocol !== "https:" || !isPaystack) {
+                throw new Error("Invalid Paystack checkout URL.");
+            }
+
+            return url.href;
+        }
+
+        async function initializePayment() {
+            const token = getAuthToken();
+
+            if (!token) {
+                showMessage(
+                    "Please log in to continue with your subscription."
+                );
+                return;
+            }
+
+            payButton.disabled = true;
+            payButton.textContent = "Preparing Checkout...";
+            clearMessage();
+
+            try {
+                /*
+                  Backend integration contract:
+        
+                  POST /api/payments/initialize
+        
+                  Request:
+                  {
+                    "plan": "MONTHLY" or "YEARLY",
+                    "paymentMethod": "momo" or "card"
+                  }
+        
+                  Expected response:
+                  {
+                    "authorizationUrl": "https://checkout.paystack.com/..."
+                  }
+        
+                  This endpoint and response format must be
+                  confirmed or implemented by the backend developer.
+        
+                  Prices must be calculated on the backend.
+                  Never send or trust a price from the browser.
+                */
+
+                const response = await fetch(
+                    `${API_BASE_URL}/api/payments/initialize`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            plan: selectedPlan,
+                            paymentMethod: selectedMethod
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Unable to initialize payment."
+                    );
+                }
+
+                if (!data.authorizationUrl) {
+                    throw new Error(
+                        "The payment checkout URL was not returned."
+                    );
+                }
+
+                const checkoutUrl = validatePaystackUrl(
+                    data.authorizationUrl
+                );
+
+                window.location.assign(checkoutUrl);
+
+            } catch (error) {
+                console.error("Payment initialization error:", error);
+
+                if (error instanceof TypeError) {
+                    showMessage(
+                        "Unable to connect to the payment server. Please try again later."
+                    );
+                } else {
+                    showMessage(
+                        error.message || "Payment could not be started."
+                    );
+                }
+
+                payButton.disabled = false;
+                payButton.textContent = "Proceed to Payment →";
+            }
+        }
+
+        payButton.addEventListener("click", initializePayment);
+    </script>
+
+</body>
+
+</html>
