@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Institution Dashboard | Quizora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+
+            <a href="admin-dashboard.html" class="logo">
+                <span class="logo-mark">Q</span>
+                <span>Quizora</span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="active">
+                    Dashboard
+                </a>
+
+                <a href="#students">
+                    Students
+                </a>
+
+                <a href="#reports">
+                    Reports
+                </a>
+            </nav>
+
+            <div class="admin-profile">
+                <div class="admin-profile-text">
+                    <span>Institution Admin</span>
+                    <strong id="adminInstitutionName">
+                        Quizora Institution
+                    </strong>
+                </div>
+
+                <button type="button" class="logout-button" id="adminLogoutButton">
+                    Logout
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- WELCOME -->
+        <section class="admin-welcome-section">
+            <div class="container">
+
+                <div class="admin-welcome-card">
+
+                    <div>
+                        <span class="admin-eyebrow">
+                            INSTITUTION PORTAL
+                        </span>
+
+                        <h1>
+                            Institution Dashboard
+                        </h1>
+
+                        <p>
+                            Monitor student participation,
+                            quiz performance and learning progress
+                            from one place.
+                        </p>
+                    </div>
+
+                    <div class="admin-welcome-badge">
+                        <span>Institution Code</span>
+                        <strong id="adminInstitutionCode">
+                            QUIZORA-2026
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- OVERVIEW -->
+        <section class="admin-section">
+            <div class="container">
+
+                <div class="admin-section-heading">
+                    <div>
+                        <span class="section-tag">
+                            OVERVIEW
+                        </span>
+
+                        <h2>
+                            Performance Summary
+                        </h2>
+
+                        <p>
+                            A quick overview of student activity
+                            within your institution.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="admin-stat-grid">
+
+                    <article class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            👥
+                        </div>
+
+                        <div>
+                            <span>
+                                Enrolled Students
+                            </span>
+
+                            <strong id="adminTotalStudents">
+                                0
+                            </strong>
+                        </div>
+                    </article>
+
+
+                    <article class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            📝
+                        </div>
+
+                        <div>
+                            <span>
+                                Quiz Attempts
+                            </span>
+
+                            <strong id="adminQuizAttempts">
+                                0
+                            </strong>
+                        </div>
+                    </article>
+
+
+                    <article class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            📊
+                        </div>
+
+                        <div>
+                            <span>
+                                Average Score
+                            </span>
+
+                            <strong id="adminAverageScore">
+                                0%
+                            </strong>
+                        </div>
+                    </article>
+
+
+                    <article class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            ⭐
+                        </div>
+
+                        <div>
+                            <span>
+                                Best Performance
+                            </span>
+
+                            <strong id="adminBestScore">
+                                0%
+                            </strong>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- STUDENTS -->
+        <section class="admin-section admin-students-section" id="students">
+            <div class="container">
+
+                <div class="admin-section-heading admin-heading-row">
+
+                    <div>
+                        <span class="section-tag">
+                            STUDENTS
+                        </span>
+
+                        <h2>
+                            Student Performance
+                        </h2>
+
+                        <p>
+                            View enrolled students and their
+                            latest Quizora performance.
+                        </p>
+                    </div>
+
+
+                    <div class="admin-search-box">
+                        <input type="search" id="adminStudentSearch" placeholder="Search students..."
+                            autocomplete="off">
+                    </div>
+
+                </div>
+
+
+                <div class="admin-table-card">
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-student-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Email</th>
+                                    <th>Attempts</th>
+                                    <th>Average</th>
+                                    <th>Best Score</th>
+                                    <th>Recent Subject</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="adminStudentTableBody">
+
+                                <tr class="admin-empty-row">
+                                    <td colspan="7">
+                                        Student records will appear here.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- REPORTS -->
+        <section class="admin-section admin-reports-section" id="reports">
+            <div class="container">
+
+                <div class="admin-section-heading">
+
+                    <div>
+                        <span class="section-tag">
+                            REPORTING
+                        </span>
+
+                        <h2>
+                            Performance Reports
+                        </h2>
+
+                        <p>
+                            Prepare institutional performance
+                            records for review and reporting.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="admin-report-grid">
+
+                    <article class="admin-report-card">
+
+                        <div class="admin-report-icon">
+                            📄
+                        </div>
+
+                        <div class="admin-report-content">
+
+                            <h3>
+                                Institution Performance Report
+                            </h3>
+
+                            <p>
+                                Generate a summary of student
+                                participation, quiz attempts and
+                                overall performance.
+                            </p>
+
+                            <button type="button" class="primary-button" id="generateAdminReport">
+                                Generate Report
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="admin-report-card">
+
+                        <div class="admin-report-icon">
+                            📊
+                        </div>
+
+                        <div class="admin-report-content">
+
+                            <h3>
+                                Export Student Data
+                            </h3>
+
+                            <p>
+                                Export institutional student
+                                performance records for further
+                                analysis.
+                            </p>
+
+                            <div class="admin-export-actions">
+
+                                <button type="button" class="secondary-button" id="exportAdminCSV">
+                                    Export CSV
+                                </button>
+
+                                <button type="button" class="secondary-button" id="exportAdminPDF">
+                                    Export PDF
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div class="admin-report-preview" id="adminReportPreview">
+
+                    <div class="admin-report-preview-icon">
+                        📈
+                    </div>
+
+                    <h3>
+                        No report generated yet
+                    </h3>
+
+                    <p>
+                        Generate a performance report to view
+                        the institutional summary here.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- BACKEND NOTE -->
+        <section class="admin-backend-section">
+            <div class="container">
+
+                <div class="admin-backend-note">
+
+                    <span>
+                        ℹ️
+                    </span>
+
+                    <div>
+                        <strong>
+                            Frontend Preview
+                        </strong>
+
+                        <p>
+                            Student records and institutional
+                            statistics will be connected to the
+                            Quizora backend and database.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="admin-footer">
+        <div class="container admin-footer-inner">
+
+            <div class="logo admin-footer-logo">
+                <span class="logo-mark">Q</span>
+                <span>Quizora</span>
+            </div>
+
+            <p>
+                Institutional Learning & Performance Portal
+            </p>
+
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

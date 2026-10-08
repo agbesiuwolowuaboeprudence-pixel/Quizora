@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Quizora</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+        <div class="container dashboard-nav">
+
+            <a href="dashboard.html" class="dashboard-logo">
+                Quizora
+            </a>
+
+            <nav class="dashboard-nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="courses.html">Courses</a>
+                <a href="#progress">Progress</a>
+            </nav>
+
+            <div class="dashboard-user">
+                <div class="dashboard-user-info">
+                    <span class="dashboard-user-label">Student</span>
+                    <strong data-student-name>Student</strong>
+                </div>
+
+                <button type="button" class="dashboard-logout" data-logout>
+                    Logout
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main class="dashboard-main">
+
+        <!-- WELCOME SECTION -->
+        <section class="dashboard-welcome">
+            <div class="container">
+
+                <div class="dashboard-welcome-card">
+
+                    <div class="dashboard-welcome-content">
+
+                        <span class="dashboard-eyebrow">
+                            STUDENT DASHBOARD
+                        </span>
+
+                        <h1>
+                            Welcome back,
+                            <span data-student-name>Student</span>!
+                        </h1>
+
+                        <p>
+                            Ready for another study session?
+                            Keep practising and build your confidence
+                            one question at a time.
+                        </p>
+
+                        <div class="dashboard-welcome-actions">
+
+                            <a href="courses.html" class="dashboard-primary-button">
+                                Start a Quiz
+                            </a>
+
+                            <a href="#progress" class="dashboard-secondary-button">
+                                View Progress
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MOTIVATIONAL QUOTE -->
+                    <div class="dashboard-quote-card">
+
+                        <span class="quote-label">
+                            Daily Motivation
+                        </span>
+
+                        <blockquote id="dailyQuote">
+                            “Success is built one question at a time.”
+                        </blockquote>
+
+                        <p>
+                            Keep learning. Keep improving.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- QUICK ACTION -->
+        <section class="dashboard-section">
+
+            <div class="container">
+
+                <div class="dashboard-section-heading">
+
+                    <div>
+                        <span class="dashboard-eyebrow">
+                            QUICK START
+                        </span>
+
+                        <h2>What would you like to do?</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-action-grid">
+
+                    <a href="courses.html" class="dashboard-action-card">
+
+                        <div class="dashboard-action-icon">
+                            ▶
+                        </div>
+
+                        <div>
+                            <h3>Start Practice</h3>
+
+                            <p>
+                                Choose a BECE subject and practise
+                                without a timer.
+                            </p>
+                        </div>
+
+                        <span class="dashboard-action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a href="courses.html" class="dashboard-action-card">
+
+                        <div class="dashboard-action-icon">
+                            ⏱
+                        </div>
+
+                        <div>
+                            <h3>Timed Quiz</h3>
+
+                            <p>
+                                Test yourself under exam-style
+                                timed conditions.
+                            </p>
+                        </div>
+
+                        <span class="dashboard-action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS SUMMARY -->
+        <section class="dashboard-section dashboard-progress-section" id="progress">
+
+            <div class="container">
+
+                <div class="dashboard-section-heading">
+
+                    <div>
+                        <span class="dashboard-eyebrow">
+                            YOUR PROGRESS
+                        </span>
+
+                        <h2>Progress Summary</h2>
+
+                        <p>
+                            Your learning performance will appear here
+                            as you complete quizzes.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stats-grid">
+
+                    <!-- ATTEMPTS -->
+                    <article class="dashboard-stat-card">
+
+                        <div class="dashboard-stat-top">
+
+                            <span class="dashboard-stat-icon">
+                                ✓
+                            </span>
+
+                            <span class="dashboard-stat-label">
+                                Quiz Attempts
+                            </span>
+
+                        </div>
+
+                        <strong class="dashboard-stat-number" id="dashboardAttempts">
+                            0
+                        </strong>
+
+                        <p>
+                            Completed quizzes
+                        </p>
+
+                    </article>
+
+
+                    <!-- ACCURACY -->
+                    <article class="dashboard-stat-card">
+
+                        <div class="dashboard-stat-top">
+
+                            <span class="dashboard-stat-icon">
+                                %
+                            </span>
+
+                            <span class="dashboard-stat-label">
+                                Average Accuracy
+                            </span>
+
+                        </div>
+
+                        <strong class="dashboard-stat-number" id="dashboardAccuracy">
+                            0%
+                        </strong>
+
+                        <p>
+                            Overall performance
+                        </p>
+
+                    </article>
+
+
+                    <!-- BEST SCORE -->
+                    <article class="dashboard-stat-card">
+
+                        <div class="dashboard-stat-top">
+
+                            <span class="dashboard-stat-icon">
+                                ★
+                            </span>
+
+                            <span class="dashboard-stat-label">
+                                Best Score
+                            </span>
+
+                        </div>
+
+                        <strong class="dashboard-stat-number" id="dashboardBestScore">
+                            0%
+                        </strong>
+
+                        <p>
+                            Highest quiz result
+                        </p>
+
+                    </article>
+
+
+                    <!-- RECENT SUBJECT -->
+                    <article class="dashboard-stat-card">
+
+                        <div class="dashboard-stat-top">
+
+                            <span class="dashboard-stat-icon">
+                                ◉
+                            </span>
+
+                            <span class="dashboard-stat-label">
+                                Recent Subject
+                            </span>
+
+                        </div>
+
+                        <strong class="dashboard-stat-number dashboard-subject-stat" id="dashboardRecentSubject">
+                            —
+                        </strong>
+
+                        <p>
+                            Last subject practised
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT PERFORMANCE -->
+        <section class="dashboard-section">
+
+            <div class="container">
+
+                <div class="dashboard-performance-grid">
+
+
+                    <!-- RECENT ACTIVITY -->
+                    <article class="dashboard-panel">
+
+                        <div class="dashboard-panel-header">
+
+                            <div>
+                                <span class="dashboard-eyebrow">
+                                    ACTIVITY
+                                </span>
+
+                                <h2>Recent Performance</h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="dashboard-empty-state" id="dashboardRecentActivity">
+
+                            <div class="dashboard-empty-icon">
+                                📊
+                            </div>
+
+                            <h3>No quiz activity yet</h3>
+
+                            <p>
+                                Complete your first quiz and your
+                                recent performance will appear here.
+                            </p>
+
+                            <a href="courses.html" class="dashboard-small-button">
+                                Take Your First Quiz
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- QUIZ MODE -->
+                    <article class="dashboard-panel">
+
+                        <div class="dashboard-panel-header">
+
+                            <div>
+                                <span class="dashboard-eyebrow">
+                                    QUIZ MODES
+                                </span>
+
+                                <h2>Choose Your Mode</h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="dashboard-mode-list">
+
+                            <div class="dashboard-mode-item">
+
+                                <div class="dashboard-mode-icon">
+                                    📖
+                                </div>
+
+                                <div>
+                                    <h3>Practice Mode</h3>
+
+                                    <p>
+                                        Learn at your own pace with
+                                        no timer.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="dashboard-mode-item">
+
+                                <div class="dashboard-mode-icon">
+                                    ⏱
+                                </div>
+
+                                <div>
+                                    <h3>Exam Mode</h3>
+
+                                    <p>
+                                        Practise with a timer for an
+                                        exam-style experience.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <a href="courses.html" class="dashboard-full-button">
+                            Continue to Courses
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTINUE LEARNING -->
+        <section class="dashboard-continue-section">
+
+            <div class="container">
+
+                <div class="dashboard-continue-card">
+
+                    <div>
+
+                        <span class="dashboard-eyebrow">
+                            READY TO CONTINUE?
+                        </span>
+
+                        <h2>
+                            Build your next Quizora session.
+                        </h2>
+
+                        <p>
+                            Select your subject, exam year and quiz
+                            mode to begin practising.
+                        </p>
+
+                    </div>
+
+                    <a href="courses.html" class="dashboard-primary-button">
+                        Browse Courses →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="dashboard-footer">
+
+        <div class="container dashboard-footer-content">
+
+            <strong>Quizora</strong>
+
+            <p>
+                Learn. Practise. Improve.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
