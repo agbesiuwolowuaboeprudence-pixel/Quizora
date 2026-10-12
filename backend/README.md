@@ -64,10 +64,25 @@ Without Docker, install PostgreSQL, create a database named `quizora`, then conf
 | `DB_USER`     | `postgres`                                   | DB user |
 | `DB_PASSWORD` | required                                     | Database and Compose password |
 | `JWT_SECRET`  | required (at least 32 characters)           | JWT signing key |
-| `CORS_ORIGINS`| required                                     | Exact comma-separated allowed origins |
+| `CORS_ORIGINS`| required                                     | Comma-separated allowed origins/patterns |
 
 The default profile uses Flyway migrations and does not create demo accounts. Keep secrets
 out of source control; use environment variables or a secret manager.
+
+### Testing from API clients and browser apps
+
+Postman, Insomnia, and `curl` do not enforce browser CORS rules. Browser apps do: set
+`CORS_ORIGINS` to the origin(s) that host your frontend (scheme and port included), separated
+by commas. For example, for local Vite and deployed web apps:
+
+```powershell
+$env:CORS_ORIGINS = "http://localhost:5173,https://app.example.com"
+```
+
+The demo profile allows any origin for local testing. Do not use a wildcard origin for a public
+deployment. Requests using JWT should send `Authorization: Bearer <token>` and JSON requests
+should set `Content-Type: application/json`. The API exposes `Content-Disposition` to browser
+clients so report downloads can read their filenames.
 
 ### Run the tests
 

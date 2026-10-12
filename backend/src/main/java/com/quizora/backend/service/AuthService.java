@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -131,7 +132,7 @@ public class AuthService {
     }
 
     private LicenseCode requireUsableLicense(String rawCode) {
-        LicenseCode license = licenseCodeRepository.findByCodeIgnoreCase(rawCode.trim())
+        LicenseCode license = licenseCodeRepository.findByCodeIgnoreCaseForUpdate(rawCode.trim())
                 .orElseThrow(() -> new NotFoundException("Invalid institutional code"));
         if (license.getStatus() != com.quizora.backend.domain.LicenseStatus.ACTIVE) {
             throw new BadRequestException("This institutional code is no longer active");
@@ -157,6 +158,6 @@ public class AuthService {
     }
 
     private String normalizeEmail(String email) {
-        return email.trim().toLowerCase();
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }

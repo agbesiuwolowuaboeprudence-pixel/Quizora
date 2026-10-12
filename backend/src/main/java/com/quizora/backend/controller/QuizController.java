@@ -4,11 +4,15 @@ import com.quizora.backend.dto.QuizDtos;
 import com.quizora.backend.security.CurrentUser;
 import com.quizora.backend.service.QuizService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/quizzes")
 public class QuizController {
 
@@ -28,8 +32,9 @@ public class QuizController {
 
     /** My attempt history, newest first. */
     @GetMapping
-    public List<QuizDtos.AttemptSummary> history(@RequestParam(defaultValue = "0") int page,
-                                                 @RequestParam(defaultValue = "20") int size) {
+    public List<QuizDtos.AttemptSummary> history(
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size) {
         return quizService.history(currentUser.get(), page, size);
     }
 

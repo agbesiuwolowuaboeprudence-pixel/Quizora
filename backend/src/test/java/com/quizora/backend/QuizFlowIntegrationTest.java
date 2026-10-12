@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -194,10 +196,13 @@ class QuizFlowIntegrationTest {
         // CSV report download
         mockMvc.perform(get("/api/institutions/{id}/report/export", institutionId)
                         .param("format", "csv")
+                        .header("Origin", "http://localhost:5173")
                         .header("Authorization", bearer(adminToken)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition",
-                        org.hamcrest.Matchers.containsString(".csv")));
+                        org.hamcrest.Matchers.containsString(".csv")))
+                .andExpect(header().string("Access-Control-Expose-Headers",
+                        org.hamcrest.Matchers.containsString("Content-Disposition")));
 
         // PDF report download
         mockMvc.perform(get("/api/institutions/{id}/report/export", institutionId)
@@ -257,5 +262,65 @@ class QuizFlowIntegrationTest {
 
         assertThat(attemptRepository.findById(attemptId).orElseThrow().getStatus())
                 .isEqualTo(AttemptStatus.EXPIRED);
+    }
+
+    @Test
+    @DisplayName("browser clients can preflight requests and receive consistent JSON errors")
+    void browserCorsAndAuthenticationErrors() throws Exception {
+        mockMvc.perform(options("/api/quizzes")
+                        .header("Origin", "http://localhost:5173")
+                        .header("Access-Control-Request-Method", "GET")
+                        .header("Access-Control-Request-Headers", "authorization"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5173"))
+                .andExpect(header().string("Access-Control-Allow-Headers",
+                        org.hamcrest.Matchers.containsStringIgnoringCase("authorization")));
+
+        mockMvc.perform(get("/api/quizzes").header("Origin", "http://localhost:5173"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.path").value("/api/quizzes"))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+
+        mockMvc.perform(post("/api/auth/login")
+                        .header("Origin", "http://localhost:5173")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{invalid-json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value(
+                        "Request body is missing or contains invalid JSON or values"));
+    }
+
+    @Test
+    @DisplayName("invalid pagination and report formats return client errors")
+    void invalidQueryParametersReturnBadRequest() throws Exception {
+        String token = register("pagination" + System.nanoTime() + "@test.com", "Secret123");
+        mockMvc.perform(get("/api/quizzes")
+                        .param("page", "-1")
+                        .header("Authorization", bearer(token)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
+        mockMvc.perform(get("/api/progress/attempts")
+                        .param("size", "101")
+                        .header("Authorization", bearer(token)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
+
+        MvcResult loginResult = mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":\"school@demo.com\",\"password\":\"School@123\"}"))
+                .andExpect(status().isOk())
+                .andReturn();
+        String adminToken = objectMapper.readTree(loginResult.getResponse().getContentAsString())
+                .get("token").asText();
+
+        mockMvc.perform(get("/api/institutions/1/report/export")
+                        .param("format", "xml")
+                        .header("Authorization", bearer(adminToken)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("format must be csv or pdf"));
     }
 }

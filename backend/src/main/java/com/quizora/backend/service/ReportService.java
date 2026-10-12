@@ -115,8 +115,10 @@ public class ReportService {
 
     private String escape(String value) {
         if (value == null) return "";
-        String v = value.replace("\"", "\"\"");
-        if (v.contains(",") || v.contains("\"") || v.contains("\n")) {
+        String safeValue = value.matches("^[\\u0000-\\u0020]*[=+@-].*")
+                ? "'" + value : value;
+        String v = safeValue.replace("\"", "\"\"");
+        if (v.contains(",") || v.contains("\"") || v.contains("\n") || v.contains("\r")) {
             return "\"" + v + "\"";
         }
         return v;

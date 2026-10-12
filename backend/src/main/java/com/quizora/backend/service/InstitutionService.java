@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class InstitutionService {
     /** Admin creates an institution together with its admin account. */
     @Transactional
     public InstitutionDtos.InstitutionResponse create(InstitutionDtos.CreateInstitutionRequest request) {
-        String email = request.contactEmail().trim().toLowerCase();
+        String email = request.contactEmail().trim().toLowerCase(Locale.ROOT);
         if (institutionRepository.findByContactEmailIgnoreCase(email).isPresent()
                 || userRepository.existsByEmailIgnoreCase(email)) {
             throw new ConflictException("An account with this email already exists");

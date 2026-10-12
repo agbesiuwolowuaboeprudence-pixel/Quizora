@@ -2,6 +2,7 @@ package com.quizora.backend.controller;
 
 import com.quizora.backend.domain.User;
 import com.quizora.backend.dto.InstitutionDtos;
+import com.quizora.backend.exception.BadRequestException;
 import com.quizora.backend.security.CurrentUser;
 import com.quizora.backend.service.InstitutionService;
 import com.quizora.backend.service.ReportService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/institutions")
@@ -64,15 +66,20 @@ public class InstitutionController {
     /** Downloadable report: ?format=csv (default) or ?format=pdf */
     @GetMapping("/{id}/report/export")
     public ResponseEntity<byte[]> export(@PathVariable Long id,
-                                         @RequestParam(defaultValue = "csv") String format) throws Exception {
+                                         @RequestParam(defaultValue = "csv") String format)
+            throws com.lowagie.text.DocumentException {
         User actor = currentUser.get();
-        if ("pdf".equalsIgnoreCase(format)) {
+        String normalizedFormat = format.trim().toLowerCase(Locale.ROOT);
+        if ("pdf".equals(normalizedFormat)) {
             byte[] pdf = reportService.toPdf(id, actor);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment; filename=\"quizora-report-" + id + ".pdf\"")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(pdf);
+        }
+        if (!"csv".equals(normalizedFormat)) {
+            throw new BadRequestException("format must be csv or pdf");
         }
         byte[] csv = reportService.toCsv(id, actor);
         return ResponseEntity.ok()
