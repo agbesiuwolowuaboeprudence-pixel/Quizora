@@ -4806,3 +4806,45 @@ img {
         font-size: 0.78rem;
     }
 }
+
+.api-message {
+    color: #a32929;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.api-message.success {
+    color: #18794e;
+}
+
+.result-review-card {
+    margin-top: 24px;
+}
+
+.result-review-item {
+    border-top: 1px solid #e6eaf0;
+    padding: 18px 0;
+}
+
+.result-review-item:first-child {
+    border-top: 0;
+}
+
+.result-review-item h3 {
+    margin: 0 0 8px;
+}
+
+.result-review-item ul {
+    display: grid;
+    gap: 8px;
+    padding-left: 24px;
+}
+
+.result-review-item .correct {
+    color: #18794e;
+    font-weight: 700;
+}
+
+.result-review-item .incorrect {
+    color: #a32929;
+}

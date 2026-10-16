@@ -1,78 +1,98 @@
+(function () {
+    const payButton = document.getElementById("payButton");
 
-const payButton = document.getElementById("payButton");
-const paymentMessage = document.getElementById("paymentMessage");
-
-payButton.addEventListener("click", async () => {
-    const selectedCard = document.querySelector(".plan-card.selected");
-    const plan = selectedCard?.dataset.plan;
-    const method = document.querySelector(
-        'input[name="paymentMethod"]:checked'
-    )?.value;
-
-    if (!plan || !method) {
-        paymentMessage.textContent = "Please select a plan and payment method.";
+    if (!payButton) {
         return;
     }
 
-    const token = localStorage.getItem("quizoraToken");
+    const paymentMessage = document.getElementById("paymentMessage");
+    const planCards = document.querySelectorAll(".plan-card");
+    const summaryPlan = document.getElementById("summaryPlan");
+    const summaryPeriod = document.getElementById("summaryPeriod");
+    const summaryMethod = document.getElementById("summaryMethod");
+    const summaryStatus = document.getElementById("summaryAmount");
+    let selectedPlan = "MONTHLY";
 
-    if (!token) {
-        paymentMessage.textContent =
-            "Please log in before making a payment.";
-        return;
+    function showMessage(text, type) {
+        paymentMessage.textContent = text;
+        paymentMessage.className = `payment-message ${type || "error"}`;
     }
 
-    payButton.disabled = true;
-    payButton.textContent = "Preparing checkout...";
-    paymentMessage.textContent = "";
+    function selectPlan(card) {
+        planCards.forEach(item => {
+            const selected = item === card;
+            item.classList.toggle("selected", selected);
+            item.setAttribute("aria-pressed", String(selected));
+            item.querySelector(".plan-radio").checked = selected;
+        });
 
-    try {
-        // Your teammate will confirm this endpoint and response.
-        const response = await fetch(
-            "http://localhost:8080/api/payments/initialize",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    plan: plan,
-                    paymentMethod: method
-                })
+        selectedPlan = card.dataset.plan;
+        summaryPlan.textContent = selectedPlan === "MONTHLY"
+            ? "Monthly Plan"
+            : "Yearly Plan";
+        summaryPeriod.textContent = selectedPlan === "MONTHLY"
+            ? "1 Month"
+            : "12 Months";
+        paymentMessage.textContent = "";
+        paymentMessage.className = "payment-message";
+    }
+
+    planCards.forEach(card => {
+        card.addEventListener("click", () => selectPlan(card));
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectPlan(card);
             }
-        );
+        });
+    });
 
-        const data = await response.json();
+    summaryMethod.textContent = "Mock activation";
 
-        if (!response.ok) {
-            throw new Error(data.message || "Unable to start payment.");
+    payButton.addEventListener("click", async () => {
+        if (!QuizoraApi.isAuthenticated()) {
+            showMessage("Please log in before activating a subscription.");
+            return;
         }
 
-        // Redirect only to the checkout URL supplied by the backend.
-        const checkoutUrl = data.authorizationUrl;
+        payButton.disabled = true;
+        payButton.textContent = "Activating…";
+        paymentMessage.textContent = "";
 
-        if (!checkoutUrl) {
-            throw new Error("Payment checkout URL was not returned.");
+        try {
+            const subscription = await QuizoraApi.subscribe({
+                plan: selectedPlan
+            });
+
+            if (
+                !subscription ||
+                subscription.plan !== selectedPlan ||
+                typeof subscription.status !== "string" ||
+                typeof subscription.endDate !== "string"
+            ) {
+                throw new Error(
+                    "The subscription response did not match the documented API contract."
+                );
+            }
+
+            summaryStatus.textContent =
+                `${subscription.status} through ${subscription.endDate}`;
+            showMessage(
+                `${subscription.plan} subscription activated. No payment was collected.`,
+                "success"
+            );
+            payButton.textContent = "Returning to Dashboard…";
+
+            window.setTimeout(() => {
+                window.location.assign("Dashboard.html");
+            }, 1200);
+        } catch (error) {
+            showMessage(
+                error.message ||
+                    "The subscription could not be activated."
+            );
+            payButton.disabled = false;
+            payButton.textContent = "Activate Subscription →";
         }
-
-        const url = new URL(checkoutUrl);
-
-        if (
-            url.protocol !== "https:" ||
-            !(
-                url.hostname === "paystack.com" ||
-                url.hostname.endsWith(".paystack.com")
-            )
-        ) {
-            throw new Error("Unexpected payment checkout URL.");
-        }
-
-        window.location.assign(url.href);
-
-    } catch (error) {
-        paymentMessage.textContent = error.message;
-        payButton.disabled = false;
-        payButton.textContent = "Proceed to Payment";
-    }
-});
+    });
+})();

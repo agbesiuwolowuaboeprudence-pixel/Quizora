@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const studentName =
-        localStorage.getItem("quizoraStudentName") || "Student";
+        QuizoraApi.getAuthName() || "Student";
 
     const isLoggedIn =
-        Boolean(localStorage.getItem("quizoraStudentName"));
+        QuizoraApi.isAuthenticated();
 
     document.querySelectorAll("[data-student-name]").forEach(element => {
         element.textContent = studentName;
@@ -12,13 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMobileMenu();
     setupHomePage(isLoggedIn);
     setupLogout();
-    setupLogin();
-    setupRegistration();
-    setupDashboard();
-    setupAdminDashboard();
-    setupCourses();
-    setupQuiz();
-    setupResults();
+    QuizoraStudentApp.setupLogin();
+    QuizoraStudentApp.setupAdminLogin();
+    QuizoraStudentApp.setupRegistration();
+    QuizoraStudentApp.setupDashboard();
+    QuizoraStudentApp.setupAdminDashboard();
+    QuizoraStudentApp.setupCourses();
+    QuizoraStudentApp.setupQuiz();
+    QuizoraStudentApp.setupResults();
+    setupCalculator();
 });
 
 
@@ -91,12 +93,12 @@ function setupHomePage(isLoggedIn) {
 
     if (isLoggedIn) {
         if (heroStartButton) {
-            heroStartButton.href = "dashboard.html";
+            heroStartButton.href = "Dashboard.html";
             heroStartButton.textContent = "Continue Learning →";
         }
 
         if (ctaStartButton) {
-            ctaStartButton.href = "dashboard.html";
+            ctaStartButton.href = "Dashboard.html";
             ctaStartButton.textContent = "Continue Learning →";
         }
     }
@@ -110,18 +112,15 @@ function setupHomePage(isLoggedIn) {
 function setupLogout() {
     document.querySelectorAll("[data-logout]").forEach(button => {
         button.addEventListener("click", () => {
-            localStorage.removeItem("quizoraStudentName");
-            localStorage.removeItem("quizoraStudentEmail");
+            QuizoraApi.clearAuthSession();
             localStorage.removeItem("quizoraSelection");
-            localStorage.removeItem("quizoraLastResult");
+            localStorage.removeItem("quizoraAttemptId");
+            localStorage.removeItem("quizoraQuestionIndex");
 
-            /*
-                Quiz history is deliberately kept.
-                The backend will handle permanent
-                student data later.
-            */
-
-            window.location.href = "login.html";
+            window.location.href =
+                button.id === "adminLogoutButton"
+                    ? "admin-login.html"
+                    : "login.html";
         });
     });
 }

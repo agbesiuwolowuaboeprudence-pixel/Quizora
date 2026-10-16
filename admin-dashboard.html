@@ -47,7 +47,7 @@
                     </strong>
                 </div>
 
-                <button type="button" class="logout-button" id="adminLogoutButton">
+                <button type="button" class="logout-button" id="adminLogoutButton" data-logout>
                     Logout
                 </button>
             </div>
@@ -159,7 +159,7 @@
 
                         <div>
                             <span>
-                                Average Score
+                                Overall Accuracy
                             </span>
 
                             <strong id="adminAverageScore">
@@ -176,11 +176,11 @@
 
                         <div>
                             <span>
-                                Best Performance
+                                Licence Seats Used
                             </span>
 
                             <strong id="adminBestScore">
-                                0%
+                                0 / 0
                             </strong>
                         </div>
                     </article>
@@ -232,10 +232,10 @@
                                     <th>Student</th>
                                     <th>Email</th>
                                     <th>Attempts</th>
-                                    <th>Average</th>
-                                    <th>Best Score</th>
-                                    <th>Recent Subject</th>
-                                    <th>Status</th>
+                                    <th>Average Score</th>
+                                    <th>Questions</th>
+                                    <th>Last Active</th>
+                                    <th>Subscription</th>
                                 </tr>
                             </thead>
 
@@ -382,13 +382,12 @@
 
                     <div>
                         <strong>
-                            Frontend Preview
+                            Live API Data
                         </strong>
 
                         <p>
-                            Student records and institutional
-                            statistics will be connected to the
-                            Quizora backend and database.
+                            Student records, institution details and
+                            report exports are loaded from the Quizora API.
                         </p>
                     </div>
 
@@ -417,6 +416,9 @@
     </footer>
 
 
+    <script src="api-config.js"></script>
+    <script src="api.js"></script>
+    <script src="student-app.js"></script>
     <script src="script.js"></script>
 
 </body>

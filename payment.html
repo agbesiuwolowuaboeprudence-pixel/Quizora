@@ -444,34 +444,16 @@
 
             <div class="payment-box">
 
-                <h2>Payment Method</h2>
+                <h2>Demo Activation</h2>
 
                 <p class="box-description">
-                    Select how you would like to pay
-                    for your Quizora subscription.
+                    This backend activates the selected plan in demo mode.
+                    No payment is collected.
                 </p>
 
-                <label class="method-card selected">
-                    <input type="radio" name="paymentMethod" value="momo" checked>
-
-                    <span class="method-icon">📱</span>
-
-                    <span class="method-info">
-                        <strong>Mobile Money</strong>
-                        <small>MTN MoMo, Telecel Cash and supported networks</small>
-                    </span>
-                </label>
-
-                <label class="method-card">
-                    <input type="radio" name="paymentMethod" value="card">
-
-                    <span class="method-icon">💳</span>
-
-                    <span class="method-info">
-                        <strong>Debit / Credit Card</strong>
-                        <small>Pay securely with a supported bank card</small>
-                    </span>
-                </label>
+                <p class="box-description">
+                    The API returns the plan status and active dates after activation.
+                </p>
 
             </div>
 
@@ -494,25 +476,25 @@
                 </div>
 
                 <div class="summary-row">
-                    <span>Payment Method</span>
-                    <strong id="summaryMethod">Mobile Money</strong>
+                    <span>Activation Type</span>
+                    <strong id="summaryMethod">Mock activation</strong>
                 </div>
 
                 <hr class="summary-divider">
 
                 <div class="summary-row total-row">
-                    <span>Total Amount</span>
-                    <strong id="summaryAmount">Calculated at checkout</strong>
+                    <span>Subscription Status</span>
+                    <strong id="summaryAmount">Not activated</strong>
                 </div>
 
                 <button class="pay-btn" id="payButton" type="button">
-                    Proceed to Payment →
+                    Activate Subscription →
                 </button>
 
                 <p id="paymentMessage" class="payment-message" role="status" aria-live="polite"></p>
 
                 <p class="secure-text">
-                    🔒 Secure checkout powered by Paystack
+                    Demo activation only — no external checkout is used.
                 </p>
 
             </div>
@@ -555,203 +537,9 @@
         &copy; 2026 Quizora. Learn. Practise. Improve.
     </footer>
 
-    <script>
-        const API_BASE_URL = "http://localhost:8080";
-
-        // Match this key with the token saved by your login page.
-        const AUTH_TOKEN_KEY = "quizoraToken";
-
-        const planCards = document.querySelectorAll(".plan-card");
-        const methodCards = document.querySelectorAll(".method-card");
-
-        const summaryPlan = document.getElementById("summaryPlan");
-        const summaryPeriod = document.getElementById("summaryPeriod");
-        const summaryMethod = document.getElementById("summaryMethod");
-
-        const payButton = document.getElementById("payButton");
-        const paymentMessage = document.getElementById("paymentMessage");
-
-        let selectedPlan = "MONTHLY";
-        let selectedMethod = "momo";
-
-        function selectPlan(card) {
-            planCards.forEach(item => {
-                const isSelected = item === card;
-
-                item.classList.toggle("selected", isSelected);
-                item.setAttribute("aria-pressed", String(isSelected));
-
-                item.querySelector(".plan-radio").checked = isSelected;
-            });
-
-            selectedPlan = card.dataset.plan;
-
-            summaryPlan.textContent =
-                selectedPlan === "MONTHLY"
-                    ? "Monthly Plan"
-                    : "Yearly Plan";
-
-            summaryPeriod.textContent =
-                selectedPlan === "MONTHLY"
-                    ? "1 Month"
-                    : "12 Months";
-
-            clearMessage();
-        }
-
-        planCards.forEach(card => {
-            card.addEventListener("click", () => selectPlan(card));
-
-            card.addEventListener("keydown", event => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    selectPlan(card);
-                }
-            });
-        });
-
-        methodCards.forEach(card => {
-            const radio = card.querySelector('input[type="radio"]');
-
-            radio.addEventListener("change", () => {
-                methodCards.forEach(item => {
-                    item.classList.remove("selected");
-                });
-
-                card.classList.add("selected");
-
-                selectedMethod = radio.value;
-
-                summaryMethod.textContent =
-                    selectedMethod === "momo"
-                        ? "Mobile Money"
-                        : "Bank Card";
-
-                clearMessage();
-            });
-        });
-
-        function showMessage(message, type = "error") {
-            paymentMessage.textContent = message;
-            paymentMessage.className = "payment-message " + type;
-        }
-
-        function clearMessage() {
-            paymentMessage.textContent = "";
-            paymentMessage.className = "payment-message";
-        }
-
-        function getAuthToken() {
-            return localStorage.getItem(AUTH_TOKEN_KEY);
-        }
-
-        function validatePaystackUrl(checkoutUrl) {
-            const url = new URL(checkoutUrl);
-
-            const isPaystack =
-                url.hostname === "paystack.com" ||
-                url.hostname.endsWith(".paystack.com");
-
-            if (url.protocol !== "https:" || !isPaystack) {
-                throw new Error("Invalid Paystack checkout URL.");
-            }
-
-            return url.href;
-        }
-
-        async function initializePayment() {
-            const token = getAuthToken();
-
-            if (!token) {
-                showMessage(
-                    "Please log in to continue with your subscription."
-                );
-                return;
-            }
-
-            payButton.disabled = true;
-            payButton.textContent = "Preparing Checkout...";
-            clearMessage();
-
-            try {
-                /*
-                  Backend integration contract:
-        
-                  POST /api/payments/initialize
-        
-                  Request:
-                  {
-                    "plan": "MONTHLY" or "YEARLY",
-                    "paymentMethod": "momo" or "card"
-                  }
-        
-                  Expected response:
-                  {
-                    "authorizationUrl": "https://checkout.paystack.com/..."
-                  }
-        
-                  This endpoint and response format must be
-                  confirmed or implemented by the backend developer.
-        
-                  Prices must be calculated on the backend.
-                  Never send or trust a price from the browser.
-                */
-
-                const response = await fetch(
-                    `${API_BASE_URL}/api/payments/initialize`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            plan: selectedPlan,
-                            paymentMethod: selectedMethod
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(
-                        data.message || "Unable to initialize payment."
-                    );
-                }
-
-                if (!data.authorizationUrl) {
-                    throw new Error(
-                        "The payment checkout URL was not returned."
-                    );
-                }
-
-                const checkoutUrl = validatePaystackUrl(
-                    data.authorizationUrl
-                );
-
-                window.location.assign(checkoutUrl);
-
-            } catch (error) {
-                console.error("Payment initialization error:", error);
-
-                if (error instanceof TypeError) {
-                    showMessage(
-                        "Unable to connect to the payment server. Please try again later."
-                    );
-                } else {
-                    showMessage(
-                        error.message || "Payment could not be started."
-                    );
-                }
-
-                payButton.disabled = false;
-                payButton.textContent = "Proceed to Payment →";
-            }
-        }
-
-        payButton.addEventListener("click", initializePayment);
-    </script>
+    <script src="api-config.js"></script>
+    <script src="api.js"></script>
+    <script src="payment.js"></script>
 
 </body>
 
