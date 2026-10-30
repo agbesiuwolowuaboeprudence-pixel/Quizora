@@ -1,0 +1,5 @@
+# Registers listeners that run before the Spring context starts.
+# DatabasePreflightCheck verifies PostgreSQL is reachable and prints actionable
+# instructions instead of Hibernate's "Unable to determine Dialect" error.
+org.springframework.context.ApplicationListener=\
+com.quizora.backend.config.DatabasePreflightCheck

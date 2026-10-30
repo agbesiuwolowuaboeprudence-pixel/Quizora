@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Quizora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body class="register-page">
+
+    <header class="register-header">
+
+        <div class="register-header-inner">
+
+            <a href="index.html" class="register-logo">
+                Quizora
+            </a>
+
+            <div class="register-login-link">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a href="login.html">
+                    Log in
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="register-main">
+
+        <section class="register-container">
+
+            <div class="register-intro">
+
+                <span class="register-badge">
+                    GET STARTED
+                </span>
+
+                <h1>
+                    Create your Quizora account
+                </h1>
+
+                <p>
+                    Start practising BECE questions,
+                    track your progress and build
+                    confidence for your exams.
+                </p>
+
+            </div>
+
+
+            <div class="register-card">
+
+                <!-- PROGRESS -->
+
+                <div class="register-progress">
+
+                    <div class="register-progress-item active" id="registerProgressOne">
+                        <span>1</span>
+                        <p>Account Type</p>
+                    </div>
+
+                    <div class="register-progress-line"></div>
+
+                    <div class="register-progress-item" id="registerProgressTwo">
+                        <span>2</span>
+
+                        <p id="registerProgressTwoText">
+                            Your Details
+                        </p>
+                    </div>
+
+                    <div class="register-progress-line"></div>
+
+                    <div class="register-progress-item" id="registerProgressThree">
+                        <span>3</span>
+
+                        <p id="registerProgressThreeText">
+                            Access
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     STEP 1
+                ========================================== -->
+
+                <div class="register-step active" id="registerStepOne">
+
+                    <div class="register-step-heading">
+
+                        <span class="register-step-label">
+                            STEP 1 OF 3
+                        </span>
+
+                        <h2>
+                            Choose your account type
+                        </h2>
+
+                        <p>
+                            Select how you will be using Quizora.
+                        </p>
+
+                    </div>
+
+
+                    <div class="account-type-grid">
+
+                        <!-- INDIVIDUAL -->
+
+                        <button type="button" class="account-type-card active" data-account-type="individual">
+
+                            <div class="account-type-icon">
+                                👤
+                            </div>
+
+                            <div class="account-type-content">
+
+                                <h3>
+                                    Individual Student
+                                </h3>
+
+                                <p>
+                                    Create your own Quizora
+                                    account and manage your
+                                    personal learning progress.
+                                </p>
+
+                                <span>
+                                    Personal subscription
+                                </span>
+
+                            </div>
+
+                            <div class="account-type-check">
+                                ✓
+                            </div>
+
+                        </button>
+
+
+                        <!-- INSTITUTIONAL -->
+
+                        <button type="button" class="account-type-card" data-account-type="institutional">
+
+                            <div class="account-type-icon">
+                                🏫
+                            </div>
+
+                            <div class="account-type-content">
+
+                                <h3>
+                                    Institutional Student
+                                </h3>
+
+                                <p>
+                                    Join Quizora using an access
+                                    code provided by your school
+                                    or institution.
+                                </p>
+
+                                <span>
+                                    Institution licence
+                                </span>
+
+                            </div>
+
+                            <div class="account-type-check">
+                                ✓
+                            </div>
+
+                        </button>
+
+                    </div>
+
+
+                    <button type="button" class="register-primary-button" id="accountTypeContinue">
+                        Continue →
+                    </button>
+
+                </div>
+
+
+                <!-- =========================================
+                     STEP 2 - INDIVIDUAL DETAILS
+                ========================================== -->
+
+                <div class="register-step" id="registerStepTwo">
+
+                    <div id="individualDetailsSection">
+
+                        <div class="register-step-heading">
+
+                            <span class="register-step-label">
+                                STEP 2 OF 3
+                            </span>
+
+                            <h2>
+                                Tell us about yourself
+                            </h2>
+
+                            <p>
+                                Enter your details to create
+                                your student profile.
+                            </p>
+
+                        </div>
+
+
+                        <form id="registrationDetailsForm" class="register-form">
+
+                            <div class="register-form-group">
+
+                                <label for="registerName">
+                                    Full Name
+                                </label>
+
+                                <input type="text" id="registerName" placeholder="Enter your full name"
+                                    autocomplete="name">
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="registerEmail">
+                                    Email Address
+                                </label>
+
+                                <input type="email" id="registerEmail" placeholder="Enter your email address"
+                                    autocomplete="email">
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="registerPassword">
+                                    Password
+                                </label>
+
+                                <div class="register-password-field">
+
+                                    <input type="password" id="registerPassword" placeholder="Create a password"
+                                        autocomplete="new-password">
+
+                                    <button type="button" id="registerPasswordToggle">
+                                        Show
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="registerConfirmPassword">
+                                    Confirm Password
+                                </label>
+
+                                <div class="register-password-field">
+
+                                    <input type="password" id="registerConfirmPassword"
+                                        placeholder="Confirm your password" autocomplete="new-password">
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="register-message" id="registerMessage"></div>
+
+
+                            <div class="register-buttons">
+
+                                <button type="button" class="register-secondary-button" id="registerBackOne">
+                                    ← Back
+                                </button>
+
+                                <button type="submit" class="register-primary-button">
+                                    Continue →
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         STEP 2 - INSTITUTIONAL ACCESS
+                    ====================================== -->
+
+                    <div id="institutionCodeSection" style="display: none;">
+
+                        <div class="register-step-heading">
+
+                            <span class="register-step-label">
+                                STEP 2 OF 3
+                            </span>
+
+                            <h2>
+                                Join your institution
+                            </h2>
+
+                            <p>
+                                Enter the access code provided
+                                by your school or institution.
+                            </p>
+
+                        </div>
+
+
+                        <div class="institution-access-card">
+
+                            <div class="institution-access-icon">
+                                🏫
+                            </div>
+
+                            <h3>
+                                Institutional Access
+                            </h3>
+
+                            <p>
+                                Your institution manages your
+                                Quizora subscription and
+                                student access.
+                            </p>
+
+                        </div>
+
+
+                        <div class="register-form-group">
+
+                            <label for="institutionCode">
+                                Institutional Access Code
+                            </label>
+
+                            <input type="text" id="institutionCode" placeholder="Example: QUIZORA-2026"
+                                autocomplete="off">
+
+                        </div>
+
+
+                        <div class="register-message" id="institutionMessage"></div>
+
+
+                        <div class="register-note">
+
+                            <strong>
+                                Don't have a code?
+                            </strong>
+
+                            <p>
+                                Contact your school or
+                                institution administrator
+                                for your Quizora access code.
+                            </p>
+
+                        </div>
+
+
+                        <div class="register-buttons">
+
+                            <button type="button" class="register-secondary-button" id="institutionBackButton">
+                                ← Back
+                            </button>
+
+                            <button type="button" class="register-primary-button" id="verifyInstitutionButton">
+                                Verify & Continue →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     STEP 3
+                ========================================== -->
+
+                <div class="register-step" id="registerStepThree">
+
+
+                    <!-- INDIVIDUAL PAYMENT -->
+
+                    <div id="individualAccess" class="access-section">
+
+                        <div class="register-step-heading">
+
+                            <span class="register-step-label">
+                                STEP 3 OF 3
+                            </span>
+
+                            <h2>
+                                Activate your Quizora access
+                            </h2>
+
+                            <p>
+                                Complete your subscription
+                                setup to continue to Quizora.
+                            </p>
+
+                        </div>
+
+
+                        <div class="subscription-card">
+
+                            <div class="subscription-icon">
+                                🎓
+                            </div>
+
+                            <div>
+
+                                <span class="subscription-label">
+                                    STUDENT PLAN
+                                </span>
+
+                                <h3>
+                                    Quizora Individual
+                                </h3>
+
+                                <p>
+                                    Access BECE practice,
+                                    timed quizzes and progress
+                                    tracking.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="payment-options">
+
+                            <button type="button" class="payment-option active" data-payment-method="mobile-money">
+
+                                <span>
+                                    📱
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Mobile Money
+                                    </strong>
+
+                                    <small>
+                                        Pay with your mobile wallet
+                                    </small>
+
+                                </div>
+
+                                <span class="payment-check">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+                            <button type="button" class="payment-option" data-payment-method="paystack">
+
+                                <span>
+                                    💳
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Card / Paystack
+                                    </strong>
+
+                                    <small>
+                                        Pay securely online
+                                    </small>
+
+                                </div>
+
+                                <span class="payment-check">
+                                    ✓
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="register-note">
+
+                            <strong>
+                                Frontend Demo
+                            </strong>
+
+                            <p>
+                                Payment processing will be
+                                connected to the Quizora
+                                backend later.
+                            </p>
+
+                        </div>
+
+
+                        <div class="register-buttons">
+
+                            <button type="button" class="register-secondary-button" id="individualBackButton">
+                                ← Back
+                            </button>
+
+                            <button type="button" class="register-primary-button" id="completeIndividualRegistration">
+                                Continue to Quizora →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         INSTITUTIONAL STUDENT DETAILS
+                    ====================================== -->
+
+                    <div id="institutionalAccess" class="access-section" style="display: none;">
+
+                        <div class="register-step-heading">
+
+                            <span class="register-step-label">
+                                STEP 3 OF 3
+                            </span>
+
+                            <h2>
+                                Create your student profile
+                            </h2>
+
+                            <p>
+                                Your institution has been selected.
+                                Enter your personal details to
+                                complete your Quizora profile.
+                            </p>
+
+                        </div>
+
+
+                        <div class="institution-access-card">
+
+                            <div class="institution-access-icon">
+                                ✓
+                            </div>
+
+                            <h3>
+                                Institutional Student
+                            </h3>
+
+                            <p>
+                                Your Quizora access will be
+                                connected to your institution's
+                                licence.
+                            </p>
+
+                        </div>
+
+
+                        <form id="institutionStudentForm" class="register-form">
+
+                            <div class="register-form-group">
+
+                                <label for="institutionStudentName">
+                                    Full Name
+                                </label>
+
+                                <input type="text" id="institutionStudentName" placeholder="Enter your full name"
+                                    autocomplete="name">
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="institutionStudentEmail">
+                                    Email Address
+                                </label>
+
+                                <input type="email" id="institutionStudentEmail" placeholder="Enter your email address"
+                                    autocomplete="email">
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="institutionStudentPassword">
+                                    Password
+                                </label>
+
+                                <div class="register-password-field">
+
+                                    <input type="password" id="institutionStudentPassword"
+                                        placeholder="Create a password" autocomplete="new-password">
+
+                                    <button type="button" id="institutionStudentPasswordToggle">
+                                        Show
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="register-form-group">
+
+                                <label for="institutionStudentConfirmPassword">
+                                    Confirm Password
+                                </label>
+
+                                <input type="password" id="institutionStudentConfirmPassword"
+                                    placeholder="Confirm your password" autocomplete="new-password">
+
+                            </div>
+
+
+                            <div class="register-message" id="institutionStudentMessage"></div>
+
+
+                            <div class="register-buttons">
+
+                                <button type="button" class="register-secondary-button"
+                                    id="institutionDetailsBackButton">
+                                    ← Back
+                                </button>
+
+                                <button type="submit" class="register-primary-button">
+                                    Continue to Quizora →
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="register-footer-text">
+                By creating an account, you agree to use
+                Quizora responsibly for learning and
+                educational purposes.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer class="register-footer">
+
+        <div class="register-footer-inner">
+
+            <strong>
+                Quizora
+            </strong>
+
+            <span>
+                Learn. Practise. Improve.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

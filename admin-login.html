@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Institution Login | Quizora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin-login-page">
+
+    <header class="admin-login-header">
+        <div class="admin-login-header-inner">
+
+            <a href="index.html" class="admin-login-logo">
+                <span class="admin-login-logo-mark">Q</span>
+                <span>Quizora</span>
+            </a>
+
+            <a href="login.html" class="admin-student-login-link">
+                Student Login
+            </a>
+
+        </div>
+    </header>
+
+
+    <main class="admin-login-main">
+
+        <section class="admin-login-container">
+
+            <div class="admin-login-intro">
+
+                <span class="admin-login-badge">
+                    Institutional Portal
+                </span>
+
+                <h1>
+                    Welcome back
+                </h1>
+
+                <p>
+                    Sign in to manage your institution,
+                    monitor student performance and
+                    generate reports.
+                </p>
+
+            </div>
+
+
+            <div class="admin-login-card">
+
+                <div class="admin-login-card-heading">
+
+                    <div class="admin-login-icon">
+                        🏫
+                    </div>
+
+                    <div>
+                        <h2>Institution Login</h2>
+
+                        <p>
+                            Enter your institution administrator
+                            credentials.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="adminLoginForm">
+
+                    <div class="admin-login-form-group">
+
+                        <label for="adminInstitutionCode">
+                            Institution Code
+                        </label>
+
+                        <input type="text" id="adminInstitutionCode" placeholder="e.g. QUIZORA-2026"
+                            autocomplete="organization" required>
+
+                    </div>
+
+
+                    <div class="admin-login-form-group">
+
+                        <label for="adminEmail">
+                            Administrator Email
+                        </label>
+
+                        <input type="email" id="adminEmail" placeholder="admin@school.com" autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <div class="admin-login-form-group">
+
+                        <label for="adminPassword">
+                            Password
+                        </label>
+
+                        <div class="admin-login-password-wrap">
+
+                            <input type="password" id="adminPassword" placeholder="Enter your password"
+                                autocomplete="current-password" required>
+
+                            <button type="button" id="adminPasswordToggle" class="admin-login-password-toggle">
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="adminLoginMessage" class="admin-login-message"></div>
+
+
+                    <button type="submit" class="admin-login-submit">
+                        Sign In to Institution Portal
+                    </button>
+
+                </form>
+
+
+                <div class="admin-login-help">
+
+                    <p>
+                        Having trouble accessing your
+                        institution account?
+                    </p>
+
+                    <span>
+                        Contact the Quizora administrator.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-login-student">
+
+                <span>
+                    Are you a student?
+                </span>
+
+                <a href="login.html">
+                    Go to Student Login
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="admin-login-footer">
+
+        <p>
+            © 2026 Quizora. Institutional Learning Portal.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
