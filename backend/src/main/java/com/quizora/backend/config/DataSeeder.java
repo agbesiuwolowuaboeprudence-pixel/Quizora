@@ -96,6 +96,18 @@ public class DataSeeder implements CommandLineRunner {
         Course ict = course("ICT", "ICT", "BECE information and communication technology");
         Course arts = course("Creative Arts", "CREATIVE", "BECE creative arts - visual arts, music, drama");
 
+        // Frontend demo questions (2026). Keep in sync with script.js.
+        q(maths, 2026, "What is the value of 3 × 8 + 4?", "24", "28", "32", "36", AnswerOption.B, "Multiply 3 by 8 first to get 24, then add 4 to get 28.");
+        q(maths, 2026, "What is 15% of 200?", "15", "20", "30", "40", AnswerOption.C, "15% of 200 is 0.15 × 200, which equals 30.");
+        q(maths, 2026, "Solve: 5x = 35. What is x?", "5", "6", "7", "8", AnswerOption.C, "Divide both sides by 5. Therefore x = 7.");
+        q(maths, 2026, "A rectangle has length 8 cm and width 5 cm. What is its area?", "13 cm²", "26 cm²", "40 cm²", "80 cm²", AnswerOption.C, "Area of a rectangle is length × width. 8 × 5 = 40 cm².");
+        q(maths, 2026, "Which fraction is equivalent to 0.5?", "1/4", "1/2", "2/3", "3/4", AnswerOption.B, "0.5 is the same as one half, which is 1/2.");
+        q(maths, 2026, "What is the perimeter of a square with side length 6 cm?", "12 cm", "18 cm", "24 cm", "36 cm", AnswerOption.C, "A square has four equal sides. 4 × 6 = 24 cm.");
+        q(maths, 2026, "What is 144 ÷ 12?", "10", "11", "12", "14", AnswerOption.C, "144 divided by 12 equals 12.");
+        q(maths, 2026, "If a book costs GH₵20 and you buy 3 books, how much do you pay?", "GH₵40", "GH₵50", "GH₵60", "GH₵80", AnswerOption.C, "3 books at GH₵20 each cost 3 × 20 = GH₵60.");
+        q(maths, 2026, "Which of these numbers is a prime number?", "9", "15", "17", "21", AnswerOption.C, "17 has only two factors: 1 and 17.");
+        q(maths, 2026, "What is the next number in the sequence: 2, 4, 8, 16, ...?", "18", "24", "30", "32", AnswerOption.D, "Each number is multiplied by 2. Therefore 16 × 2 = 32.");
+
         // ---------------- Mathematics 2023
         q(maths, 2023, "Simplify: 2/3 + 3/4", "17/12", "5/7", "21/12", "11/12", AnswerOption.A,
                 "L.C.M. of 3 and 4 is 12: 8/12 + 9/12 = 17/12.");
