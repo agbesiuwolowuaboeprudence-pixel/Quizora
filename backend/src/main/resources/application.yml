@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: quizora-backend
 
@@ -36,7 +38,7 @@ spring:
       max-file-size: 10MB
 
 server:
-  port: 8080
+  port: ${PORT:8080}
   error:
     include-message: never
 

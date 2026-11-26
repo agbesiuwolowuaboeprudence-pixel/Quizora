@@ -42,14 +42,14 @@ API is live at `http://localhost:8080`.
 
 ### Option B — PostgreSQL (production-like)
 
-Set a database password, JWT signing secret (at least 32 characters), and the exact
-frontend origin before starting the database and API. For PowerShell:
+Copy `.env.example` to `.env` in the project root and replace the example values. Spring Boot
+loads this local file automatically:
 
 ```powershell
-$env:DB_PASSWORD = "use-a-unique-local-password"
-$env:JWT_SECRET = "replace-with-at-least-32-random-characters"
-$env:CORS_ORIGINS = "http://localhost:3000"
+Copy-Item .env.example .env
 ```
+
+Keep `.env` local; it is ignored by Git.
 
 ```bash
 docker compose up -d          # PostgreSQL is bound to localhost only
@@ -68,6 +68,25 @@ Without Docker, install PostgreSQL, create a database named `quizora`, then conf
 
 The default profile uses Flyway migrations and does not create demo accounts. Keep secrets
 out of source control; use environment variables or a secret manager.
+
+### Deploying on Railway
+
+Add a PostgreSQL service to the Railway project, then set variables on the backend service.
+Replace `Postgres` in the references below with the exact name of your database service:
+
+```text
+DB_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}
+DB_USER=${{Postgres.PGUSER}}
+DB_PASSWORD=${{Postgres.PGPASSWORD}}
+JWT_SECRET=<stable random value of at least 32 characters>
+CORS_ORIGINS=https://<your-frontend-domain>
+```
+
+Do not activate the `demo` profile in Railway: it uses an in-memory H2 database, so accounts are
+lost when the service restarts. The default profile uses PostgreSQL and Flyway migrations; user
+accounts and BCrypt-hashed passwords remain in the Railway database across backend redeployments.
+The server listens on Railway's `PORT` when provided and defaults to `8080` locally. Set these
+values in Railway's Variables tab; do not commit real secrets.
 
 ### Testing from API clients and browser apps
 
