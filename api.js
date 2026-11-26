@@ -1,7 +1,7 @@
 (function () {
     const API_BASE_URL = (
         window.QUIZORA_API_BASE_URL ||
-        "http://localhost:8080"
+        "https://quizora-production-5ea2e8f1.up.railway.app"
     ).replace(/\/+$/, "");
 
     const TOKEN_KEY = "quizoraToken";
